@@ -103,8 +103,8 @@ export const register = async (req, res) => {
     console.error("Registration error:", err);
     return res.status(500).json({
       success: false,
-      message: "Failed to create user",
-      error: process.env.NODE_ENV === 'development' ? err.message : undefined
+      message: "Failed to create user: " + err.message,
+      error: err.message
     });
   }
 };
@@ -140,8 +140,8 @@ export const login = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       path: '/'
     })
-    .status(200)
-    .json(userInfo);
+      .status(200)
+      .json(userInfo);
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to login!" });
