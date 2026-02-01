@@ -30,7 +30,7 @@ function Register() {
         password,
         userType
       });
-      updateUser(res.data);
+      updateUser(res.data.data);
       setShowNotification(true);
       setNotificationMessage("Registration successful! Redirecting...");
       setTimeout(() => {
@@ -50,25 +50,25 @@ function Register() {
       <div className="formContainer">
         <form onSubmit={handleSubmit}>
           <h1>Create an Account</h1>
-          <input 
-            name="username" 
-            type="text" 
-            placeholder="Username" 
-            required 
+          <input
+            name="username"
+            type="text"
+            placeholder="Username"
+            required
             minLength={3}
             maxLength={20}
           />
-          <input 
-            name="email" 
-            type="email" 
-            placeholder="Email" 
-            required 
+          <input
+            name="email"
+            type="email"
+            placeholder="Email"
+            required
           />
-          <input 
-            name="password" 
-            type="password" 
-            placeholder="Password" 
-            required 
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            required
             minLength={6}
           />
           <div className="userTypeSelection">

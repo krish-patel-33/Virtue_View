@@ -10,6 +10,7 @@ import chatRoute from "./routes/chat.route.js";
 import messageRoute from "./routes/message.route.js";
 import bookingRoute from "./routes/booking.route.js";
 import propertyBookingsRoute from "./routes/propertyBookings.route.js";
+import contactRoute from "./routes/contact.route.js";
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.use("/api/chats", chatRoute);
 app.use("/api/messages", messageRoute);
 app.use("/api/bookings", bookingRoute);
 app.use("/api/property-bookings", propertyBookingsRoute);
+app.use("/api/contact", contactRoute);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
