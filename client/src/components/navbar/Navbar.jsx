@@ -1,18 +1,32 @@
 import { useContext, useState } from "react";
 import "./navbar.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { useNotificationStore } from "../../lib/notificationStore";
+import apiRequest from "../../lib/apiRequest";
 
 function Navbar() {
-  const [open, setOpen] = useState(false);
 
-  const { currentUser } = useContext(AuthContext);
+  const [open, setOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+
+  const { currentUser, updateUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await apiRequest.post("/auth/logout");
+      updateUser(null);
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const fetch = useNotificationStore((state) => state.fetch);
   const number = useNotificationStore((state) => state.number);
 
-  if(currentUser) fetch();
+  if (currentUser) fetch();
 
   return (
     <nav>
@@ -27,16 +41,20 @@ function Navbar() {
         <Link to="/properties">Properties</Link>
         <Link to="/about">About</Link>
         <Link to="/contact">Contact</Link>
+        {currentUser && currentUser.userType === "seller" && (
+          <Link to="/profile">My Properties</Link>
+        )}
       </div>
       <div className="right">
         {currentUser ? (
-          <div className="user">
+          <div className="user" onClick={() => setUserMenuOpen(!userMenuOpen)}>
             <img src={currentUser.avatar || "/noavatar.jpg"} alt="" />
-            <span className="username">{currentUser.username}</span>
-            <Link to="/profile" className="profile">
-              {number > 0 && <div className="notification">{number}</div>}
-              <span>Profile</span>
-            </Link>
+            {userMenuOpen && (
+              <div className="user-menu-dropdown">
+                <Link to="/profile">Profile</Link>
+                <div onClick={handleLogout} className="logout-btn">Sign out</div>
+              </div>
+            )}
           </div>
         ) : (
           <>
@@ -58,6 +76,9 @@ function Navbar() {
           <Link to="/properties">Properties</Link>
           <Link to="/about">About</Link>
           <Link to="/contact">Contact</Link>
+          {currentUser && currentUser.userType === "seller" && (
+            <Link to="/profile">My Properties</Link>
+          )}
           {currentUser ? (
             <>
               <Link to="/profile">Profile</Link>
