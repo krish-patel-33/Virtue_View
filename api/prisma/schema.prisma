@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native"]
 }
 
 datasource db {
@@ -77,6 +78,8 @@ model User {
   password   String
   avatar     String?
   userType   UserType    @default(buyer)
+  resetToken String?
+  resetTokenExpr DateTime?
   createdAt  DateTime    @default(now())
   posts      Post[]
   savedPosts SavedPost[]

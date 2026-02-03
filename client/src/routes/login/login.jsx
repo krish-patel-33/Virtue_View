@@ -30,7 +30,7 @@ function Login() {
         username,
         password,
       });
-      
+
       if (res.data) {
         updateUser(res.data);
         navigate("/");
@@ -75,6 +75,9 @@ function Login() {
           <button disabled={isLoading}>
             {isLoading ? "Logging in..." : "Login"}
           </button>
+          <div style={{ textAlign: "center", marginTop: "10px" }}>
+            <Link to="/forgot-password" style={{ fontSize: "12px", color: "gray" }}>Forgot Password?</Link>
+          </div>
           {error && <span className="error">{error}</span>}
           <div className="links">
             <Link to="/register">{"Don't"} you have an account?</Link>
