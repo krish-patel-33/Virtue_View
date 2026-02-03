@@ -11,6 +11,8 @@ import NewPostPage from "./routes/newPostPage/newPostPage";
 import AboutPage from "./routes/aboutPage/aboutPage";
 import ContactPage from "./routes/contactPage/contactPage";
 import PropertiesPage from "./routes/propertiesPage/propertiesPage";
+import ForgotPassword from "./routes/forgotPassword/forgotPassword";
+import ResetPassword from "./routes/resetPassword/resetPassword";
 import { listPageLoader, profilePageLoader, singlePageLoader } from "./lib/loaders";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
@@ -56,6 +58,14 @@ function App() {
         {
           path: "/register",
           element: <Register />,
+        },
+        {
+          path: "/forgot-password",
+          element: <ForgotPassword />,
+        },
+        {
+          path: "/reset-password",
+          element: <ResetPassword />,
         },
       ],
     },
