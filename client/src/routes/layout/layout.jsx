@@ -18,8 +18,10 @@ function Layout() {
 }
 
 function RequireAuth() {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, loading } = useContext(AuthContext);
   const location = useLocation();
+
+  if (loading) return <div className="loading">Loading...</div>;
 
   if (!currentUser) {
     return <Navigate to="/login" state={{ from: location }} replace />;

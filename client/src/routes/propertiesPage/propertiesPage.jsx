@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import apiRequest from "../../lib/apiRequest";
 import "./propertiesPage.scss";
 
 function PropertiesPage() {
@@ -11,19 +11,21 @@ function PropertiesPage() {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/api/posts");
+        // Use apiRequest to leverage the base URL and interceptors
+        const res = await apiRequest.get("/posts");
+        console.log("Properties fetched:", res.data); // Debug log
         setProperties(res.data);
         setLoading(false);
       } catch (err) {
-        console.log(err);
+        console.error("Error fetching properties:", err);
         setLoading(false);
       }
     };
     fetchProperties();
   }, []);
 
-  const filteredProperties = selectedType === 'all' 
-    ? properties 
+  const filteredProperties = selectedType === 'all'
+    ? properties
     : properties.filter(property => property.type === selectedType);
 
   return (
@@ -31,7 +33,7 @@ function PropertiesPage() {
 
       <div className="container">
         {/* Filter Section */}
-       
+
 
         {loading ? (
           <div className="loading">
@@ -64,9 +66,9 @@ function PropertiesPage() {
                       </div>
                     )}
                     <div className="propertyType">
-                      <i className={`fas fa-${property.type === 'house' ? 'house-user' : 
-                        property.type === 'apartment' ? 'building' : 
-                        property.type === 'villa' ? 'hotel' : 'home'}`}></i>
+                      <i className={`fas fa-${property.type === 'house' ? 'house-user' :
+                        property.type === 'apartment' ? 'building' :
+                          property.type === 'villa' ? 'hotel' : 'home'}`}></i>
                       <span>{property.type.charAt(0).toUpperCase() + property.type.slice(1)}</span>
                     </div>
                   </div>
