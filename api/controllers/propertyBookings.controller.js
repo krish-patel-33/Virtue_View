@@ -33,6 +33,7 @@ export const getPropertyBookings = async (req, res, next) => {
             username: true,
             avatar: true,
             email: true,
+            phoneNumber: true,
           },
         },
         post: {
@@ -93,6 +94,7 @@ export const updateBookingStatus = async (req, res, next) => {
             username: true,
             avatar: true,
             email: true,
+            phoneNumber: true,
           },
         },
         post: {

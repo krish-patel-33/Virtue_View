@@ -28,8 +28,8 @@ function PropertyBookings() {
       const response = await apiRequest.patch(`/property-bookings/${bookingId}/status`, {
         status: newStatus,
       });
-      
-      setBookings(bookings.map(booking => 
+
+      setBookings(bookings.map(booking =>
         booking.id === bookingId ? response.data : booking
       ));
     } catch (err) {
@@ -60,6 +60,11 @@ function PropertyBookings() {
                 <p className={`status ${booking.status}`}>
                   Status: {booking.status}
                 </p>
+                {booking.status === 'approved' && booking.user.phoneNumber && (
+                  <p className="phoneNumber">
+                    Phone: {booking.user.phoneNumber}
+                  </p>
+                )}
               </div>
               <div className="booking-actions">
                 <Link to={`/post/${booking.postId}`}>
@@ -67,13 +72,13 @@ function PropertyBookings() {
                 </Link>
                 {booking.status === 'pending' && (
                   <div className="status-buttons">
-                    <button 
+                    <button
                       className="approve"
                       onClick={() => handleStatusUpdate(booking.id, 'approved')}
                     >
                       Approve
                     </button>
-                    <button 
+                    <button
                       className="reject"
                       onClick={() => handleStatusUpdate(booking.id, 'rejected')}
                     >

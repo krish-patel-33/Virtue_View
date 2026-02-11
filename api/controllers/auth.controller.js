@@ -74,6 +74,7 @@ export const register = async (req, res) => {
         email: true,
         userType: true,
         avatar: true,
+        phoneNumber: true,
         createdAt: true
       }
     });

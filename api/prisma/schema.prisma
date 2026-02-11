@@ -78,6 +78,7 @@ model User {
   password   String
   avatar     String?
   userType   UserType    @default(buyer)
+  phoneNumber String?
   resetToken String?
   resetTokenExpr DateTime?
   createdAt  DateTime    @default(now())
