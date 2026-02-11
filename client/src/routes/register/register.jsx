@@ -1,7 +1,7 @@
 import "./register.scss";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import apiRequest from "../../lib/apiRequest";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
@@ -13,7 +13,13 @@ function Register() {
   const [showNotification, setShowNotification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState("");
   const navigate = useNavigate();
-  const { updateUser } = useContext(AuthContext);
+  const { currentUser, updateUser, loading } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (currentUser && !loading) {
+      navigate("/");
+    }
+  }, [currentUser, loading, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,16 +36,15 @@ function Register() {
         password,
         userType
       });
-      updateUser(res.data.data);
+      updateUser(res.data.data); // accessing data from the response structure
       setShowNotification(true);
-      setNotificationMessage("Registration successful! Redirecting...");
-      setTimeout(() => {
-        navigate("/");
-      }, 2000);
+      setNotificationMessage("Registration successful!");
     } catch (err) {
-      setError(err.response.data.message);
+      console.error("Registration failed:", err);
+      const errorMessage = err.response?.data?.message || "Registration failed. Please try again.";
+      setError(errorMessage);
       setShowNotification(true);
-      setNotificationMessage(err.response.data.message);
+      setNotificationMessage(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -81,7 +86,7 @@ function Register() {
               <span>Seller</span>
             </label>
           </div>
-          <button disabled={isLoading}>Register</button>
+          <button disabled={isLoading} type="submit">Register</button>
           {error && <span>{error}</span>}
           <div className="links">
             <Link to="/login">Do you have an account?</Link>

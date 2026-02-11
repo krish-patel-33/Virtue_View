@@ -4,13 +4,23 @@ import "leaflet/dist/leaflet.css";
 import Pin from "../pin/Pin";
 
 function Map({ items }) {
+  let center = [52.4797, -1.90269]; // Default to Birmingham
+
+  if (items.length > 0) {
+    const validItems = items.filter(
+      (item) => !isNaN(parseFloat(item.latitude)) && !isNaN(parseFloat(item.longitude))
+    );
+
+    if (validItems.length > 0) {
+      const totalLat = validItems.reduce((sum, item) => sum + parseFloat(item.latitude), 0);
+      const totalLng = validItems.reduce((sum, item) => sum + parseFloat(item.longitude), 0);
+      center = [totalLat / validItems.length, totalLng / validItems.length];
+    }
+  }
+
   return (
     <MapContainer
-      center={
-        items.length === 1
-          ? [items[0].latitude, items[0].longitude]
-          : [52.4797, -1.90269]
-      }
+      center={center}
       zoom={7}
       scrollWheelZoom={false}
       className="map"

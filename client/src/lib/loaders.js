@@ -7,7 +7,7 @@ export const singlePageLoader = async ({ request, params }) => {
 };
 
 export const listPageLoader = async ({ request, params }) => {
-  const query = request.url.split("?")[1];
+  const query = request.url.split("?")[1] || "";
   const postPromise = apiRequest("/posts?" + query);
   return defer({
     postResponse: postPromise,
@@ -20,7 +20,7 @@ export const profilePageLoader = async () => {
       console.error("Error fetching profile posts:", err);
       return { data: { userPosts: [], savedPosts: [] } };
     });
-    
+
     const chatPromise = apiRequest("/chats").catch(err => {
       console.error("Error fetching chats:", err);
       return { data: [] };

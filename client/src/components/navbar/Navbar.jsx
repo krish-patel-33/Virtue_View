@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import "./navbar.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
@@ -26,7 +26,9 @@ function Navbar() {
   const fetch = useNotificationStore((state) => state.fetch);
   const number = useNotificationStore((state) => state.number);
 
-  if (currentUser) fetch();
+  useEffect(() => {
+    if (currentUser) fetch();
+  }, [currentUser, fetch]);
 
   return (
     <nav>
