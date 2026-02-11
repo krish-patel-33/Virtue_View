@@ -19,15 +19,16 @@ function ProfileUpdatePage() {
     setIsLoading(true);
     setError("");
     setSuccessMessage("");
-    
+
     const formData = new FormData(e.target);
-    const { username, email, password } = Object.fromEntries(formData);
+    const { username, email, password, phoneNumber } = Object.fromEntries(formData);
 
     try {
       const res = await apiRequest.put(`/users/${currentUser.id}`, {
         username,
         email,
         password,
+        phoneNumber,
         avatar: avatar[0] || currentUser.avatar
       });
       updateUser(res.data);
@@ -69,11 +70,21 @@ function ProfileUpdatePage() {
             />
           </div>
           <div className="item">
+            <label htmlFor="phoneNumber">Phone Number</label>
+            <input
+              id="phoneNumber"
+              name="phoneNumber"
+              type="text"
+              defaultValue={currentUser.phoneNumber || ""}
+              placeholder="Enter your phone number"
+            />
+          </div>
+          <div className="item">
             <label htmlFor="password">Password</label>
-            <input 
-              id="password" 
-              name="password" 
-              type="password" 
+            <input
+              id="password"
+              name="password"
+              type="password"
               placeholder="Leave blank to keep current password"
             />
           </div>
@@ -96,10 +107,10 @@ function ProfileUpdatePage() {
         </form>
       </div>
       <div className="sideContainer">
-        <img 
-          src={avatar[0] || currentUser.avatar || "/noavatar.jpg"} 
-          alt="Profile Avatar" 
-          className="avatar" 
+        <img
+          src={avatar[0] || currentUser.avatar || "/noavatar.jpg"}
+          alt="Profile Avatar"
+          className="avatar"
         />
         <div className="uploadSection">
           <UploadWidget

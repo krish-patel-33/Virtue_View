@@ -53,6 +53,13 @@ function SinglePage() {
       return;
     }
 
+    if (!currentUser.phoneNumber) {
+      if (window.confirm("You must add a phone number to book a visit. Go to profile settings?")) {
+        navigate("/profile/update");
+      }
+      return;
+    }
+
     if (!bookingDate) {
       setBookingError("Please select a date for your visit");
       return;
@@ -63,7 +70,7 @@ function SinglePage() {
         postId: post.id,
         date: bookingDate,
       });
-      
+
       if (res.data.message === "Booking created successfully") {
         setBookingSuccess("Booking request sent successfully!");
         setShowBookingForm(false);
@@ -110,7 +117,7 @@ function SinglePage() {
             ></div>
           </div>
         </div>
-        
+
         <div className="features">
           <div className="wrapper">
             <p className="title">General</p>
@@ -189,7 +196,7 @@ function SinglePage() {
                 </div>
               </div>
             </div>
-            
+
             <div className="buttons">
               <button>
                 <img src="/chat.png" alt="" />
@@ -213,7 +220,7 @@ function SinglePage() {
                 </button>
               )}
             </div>
-            
+
             {showBookingForm && (
               <div className="booking-form">
                 <h3>Book a Visit</h3>
@@ -235,7 +242,7 @@ function SinglePage() {
           </div>
         </div>
       </div>
-      
+
       <div className="rightContent">
         <div className="modelViewerContainer">
           <ModelViewer />
