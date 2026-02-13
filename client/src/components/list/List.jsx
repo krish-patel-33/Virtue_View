@@ -1,7 +1,7 @@
 import './list.scss'
 import Card from "../card/Card"
 
-function List({ posts }) {
+function List({ posts, onDelete }) {
   if (!posts || posts.length === 0) {
     return (
       <div className="list empty">
@@ -13,7 +13,7 @@ function List({ posts }) {
   return (
     <div className='list'>
       {posts.map(item => (
-        <Card key={item.id} item={item} />
+        <Card key={item.id} item={item} onDelete={onDelete} />
       ))}
     </div>
   );
