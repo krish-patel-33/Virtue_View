@@ -4,7 +4,7 @@ import Bookings from "../../components/bookings/Bookings";
 import PropertyBookings from "../../components/propertyBookings/PropertyBookings";
 import "./profilePage.scss";
 import apiRequest from "../../lib/apiRequest";
-import { Await, Link, useLoaderData, useNavigate } from "react-router-dom";
+import { Await, Link, useLoaderData, useNavigate, useRevalidator } from "react-router-dom";
 import { Suspense, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -12,6 +12,7 @@ function ProfilePage() {
   const data = useLoaderData();
   const { updateUser, currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
+  const revalidator = useRevalidator(); // Used to refresh data after deletion
 
   const handleLogout = async () => {
     try {
@@ -20,6 +21,17 @@ function ProfilePage() {
       navigate("/");
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const handleDelete = async (postId) => {
+    try {
+      await apiRequest.delete(`/posts/${postId}`);
+      // Refresh the data to remove the deleted post from the list
+      revalidator.revalidate();
+    } catch (err) {
+      console.log(err);
+      alert("Failed to delete property");
     }
   };
 
@@ -80,7 +92,7 @@ function ProfilePage() {
                                 </Link>
                               </div>
                             ) : (
-                              <List posts={userPosts} />
+                              <List posts={userPosts} onDelete={handleDelete} />
                             )}
                           </>
                         );
@@ -152,3 +164,4 @@ function ProfilePage() {
 }
 
 export default ProfilePage;
+

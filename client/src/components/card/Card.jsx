@@ -1,7 +1,14 @@
 import { Link } from "react-router-dom";
 import "./card.scss";
 
-function Card({ item }) {
+function Card({ item, onDelete }) {
+  const handleDelete = (e) => {
+    e.preventDefault(); // Prevent navigation to single page
+    if (window.confirm("Are you sure you want to delete this property?")) {
+      onDelete(item.id);
+    }
+  };
+
   return (
     <div className="card">
       <Link to={`/${item.id}`} className="imageContainer">
@@ -20,11 +27,11 @@ function Card({ item }) {
           <div className="features">
             <div className="feature">
               <img src="/bed.png" alt="" />
-              <span>{item.bedroom} bedroom</span>
+              <span>{item.bedroom}</span>
             </div>
             <div className="feature">
               <img src="/bath.png" alt="" />
-              <span>{item.bathroom} bathroom</span>
+              <span>{item.bathroom}</span>
             </div>
           </div>
           <div className="icons">
@@ -34,6 +41,11 @@ function Card({ item }) {
             <div className="icon">
               <img src="/chat.png" alt="" />
             </div>
+            {onDelete && (
+              <div className="icon" onClick={handleDelete} title="Delete Property">
+                <img src="/delete.png" alt="" />
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -42,3 +54,4 @@ function Card({ item }) {
 }
 
 export default Card;
+
