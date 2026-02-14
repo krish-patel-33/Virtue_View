@@ -45,10 +45,10 @@ function Chat({ chats }) {
       const res = await apiRequest.post("/messages/" + chat.id, { text });
       setChat((prev) => ({ ...prev, messages: [...prev.messages, res.data] }));
       e.target.reset();
-      socket.emit("sendMessage", {
-        receiverId: chat.receiver.id,
-        data: res.data,
-      });
+      // socket.emit("sendMessage", {
+      //   receiverId: chat.receiver.id,
+      //   data: res.data,
+      // });
     } catch (err) {
       console.log(err);
     }
@@ -57,10 +57,10 @@ function Chat({ chats }) {
   const handleTyping = () => {
     if (!isTyping) {
       setIsTyping(true);
-      socket.emit("typing", {
-        receiverId: chat.receiver.id,
-        senderId: currentUser.id,
-      });
+      // socket.emit("typing", {
+      //   receiverId: chat.receiver.id,
+      //   senderId: currentUser.id,
+      // });
     }
 
     // Clear previous timeout
@@ -71,10 +71,10 @@ function Chat({ chats }) {
     // Set new timeout
     typingTimeoutRef.current = setTimeout(() => {
       setIsTyping(false);
-      socket.emit("stopTyping", {
-        receiverId: chat.receiver.id,
-        senderId: currentUser.id,
-      });
+      // socket.emit("stopTyping", {
+      //   receiverId: chat.receiver.id,
+      //   senderId: currentUser.id,
+      // });
     }, 1000);
   };
 
@@ -87,31 +87,31 @@ function Chat({ chats }) {
       }
     };
 
-    if (chat && socket) {
-      socket.on("getMessage", (data) => {
-        if (chat.id === data.chatId) {
-          setChat((prev) => ({ ...prev, messages: [...prev.messages, data] }));
-          read();
-        }
-      });
-
-      socket.on("userTyping", (userId) => {
-        if (userId === chat.receiver.id) {
-          setTyping(true);
-        }
-      });
-
-      socket.on("userStoppedTyping", (userId) => {
-        if (userId === chat.receiver.id) {
-          setTyping(false);
-        }
-      });
-    }
-    return () => {
-      socket.off("getMessage");
-      socket.off("userTyping");
-      socket.off("userStoppedTyping");
-    };
+    // if (chat && socket) {
+    //   socket.on("getMessage", (data) => {
+    //     if (chat.id === data.chatId) {
+    //       setChat((prev) => ({ ...prev, messages: [...prev.messages, data] }));
+    //       read();
+    //     }
+    //   });
+    // 
+    //   socket.on("userTyping", (userId) => {
+    //     if (userId === chat.receiver.id) {
+    //       setTyping(true);
+    //     }
+    //   });
+    // 
+    //   socket.on("userStoppedTyping", (userId) => {
+    //     if (userId === chat.receiver.id) {
+    //       setTyping(false);
+    //     }
+    //   });
+    // }
+    // return () => {
+    //   socket.off("getMessage");
+    //   socket.off("userTyping");
+    //   socket.off("userStoppedTyping");
+    // };
   }, [socket, chat]);
 
   return (
@@ -194,9 +194,9 @@ function Chat({ chats }) {
             <div ref={messageEndRef}></div>
           </div>
           <form onSubmit={handleSubmit} className="bottom">
-            <textarea 
-              name="text" 
-              placeholder="Type a message..." 
+            <textarea
+              name="text"
+              placeholder="Type a message..."
               onKeyDown={handleTyping}
             ></textarea>
             <button type="submit">
