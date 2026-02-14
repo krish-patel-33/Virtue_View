@@ -18,9 +18,9 @@ cd api && npm start &
 API_PID=$!
 
 # Start Socket
-echo "Starting Socket Server on port 4000..."
-cd socket && npm start &
-SOCKET_PID=$!
+# echo "Starting Socket Server on port 4000..."
+# cd socket && npm start &
+# SOCKET_PID=$!
 
 # Start Client
 echo "Starting Client on localhost:5173..."
