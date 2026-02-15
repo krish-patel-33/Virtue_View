@@ -18,7 +18,7 @@ function NewPostPage() {
     e.preventDefault();
     setIsSubmitting(true);
     setError("");
-    
+
     const formData = new FormData(e.target);
     const inputs = Object.fromEntries(formData);
 
@@ -48,7 +48,7 @@ function NewPostPage() {
           restaurant: parseInt(inputs.restaurant),
         },
       });
-      navigate("/"+res.data.id);
+      navigate("/" + res.data.id);
     } catch (err) {
       console.log(err);
       setError(err.response?.data?.message || "Failed to create post. Please try again.");
@@ -95,7 +95,7 @@ function NewPostPage() {
             <div className="item">
               <label htmlFor="type">Listing Type</label>
               <select name="type" id="type" required>
-                <option value="rent">Rent</option>
+                {/* <option value="rent">Rent</option> */}
                 <option value="buy">Buy</option>
               </select>
             </div>

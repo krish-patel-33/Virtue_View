@@ -53,7 +53,7 @@ function Filter() {
           >
             <option value="">any</option>
             <option value="buy">Buy</option>
-            <option value="rent">Rent</option>
+            {/* <option value="rent">Rent</option> */}
           </select>
         </div>
         <div className="item">
