@@ -5,7 +5,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 
 function HomePage() {
-  const {currentUser} = useContext(AuthContext)
+  const { currentUser } = useContext(AuthContext)
 
   return (
     <div className="homePage">
@@ -165,14 +165,14 @@ function HomePage() {
                 </li>
               </ul>
             </div>
-            <div className="footerColumn">
+            {/* <div className="footerColumn">
               <h4>Newsletter</h4>
               <p>Subscribe to our newsletter for the latest property listings and updates</p>
               <div className="newsletterForm">
                 <input type="email" placeholder="Your email address" />
                 <button><i className="fas fa-paper-plane"></i> Subscribe</button>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="footerBottom">
             <p>&copy; {new Date().getFullYear()} VirtuView Properties. All rights reserved.</p>
