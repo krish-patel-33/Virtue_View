@@ -1,23 +1,77 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import "./newPostPage.scss";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import apiRequest from "../../lib/apiRequest";
-import UploadWidget from "../../components/uploadWidget/UploadWidget";
+import CategoryUploadWidget from "../../components/uploadWidget/CategoryUploadWidget";
 import { useNavigate } from "react-router-dom";
+
+// Image categories configuration
+const IMAGE_CATEGORIES = [
+  { 
+    key: "hall", 
+    label: "Hall", 
+    description: "Main living room / hall area",
+    isCover: true 
+  },
+  { 
+    key: "bedroom", 
+    label: "Bedroom", 
+    description: "Master bedroom or any bedroom" 
+  },
+  { 
+    key: "bathroom", 
+    label: "Bathroom", 
+    description: "Bathroom / washroom area" 
+  },
+];
 
 function NewPostPage() {
   const [value, setValue] = useState("");
-  const [images, setImages] = useState([]);
+  const [categoryImages, setCategoryImages] = useState({
+    hall: null,
+    bedroom: null,
+    bathroom: null,
+  });
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigate = useNavigate();
 
+  // Handle image upload for each category
+  const handleImageUpload = useCallback((category, imageUrl) => {
+    setCategoryImages(prev => ({
+      ...prev,
+      [category.toLowerCase()]: imageUrl,
+    }));
+  }, []);
+
+  // Get images array with hall image first (as cover)
+  const getImagesArray = () => {
+    const images = [];
+    // Hall image is first (cover image)
+    if (categoryImages.hall) images.push(categoryImages.hall);
+    if (categoryImages.bedroom) images.push(categoryImages.bedroom);
+    if (categoryImages.bathroom) images.push(categoryImages.bathroom);
+    return images;
+  };
+
+  // Check if at least the cover image (hall) is uploaded
+  const hasMinimumImages = () => {
+    return categoryImages.hall !== null;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError("");
+
+    // Validate that at least the cover image is uploaded
+    if (!hasMinimumImages()) {
+      setError("Please upload at least the Hall image (cover image) before creating the listing.");
+      setIsSubmitting(false);
+      return;
+    }
 
     const formData = new FormData(e.target);
     const inputs = Object.fromEntries(formData);
@@ -35,7 +89,7 @@ function NewPostPage() {
           property: inputs.property,
           latitude: inputs.latitude,
           longitude: inputs.longitude,
-          images: images,
+          images: getImagesArray(),
         },
         postDetail: {
           desc: value,
@@ -170,24 +224,34 @@ function NewPostPage() {
       </div>
       <div className="sideContainer">
         <h2>Property Images</h2>
-        {images.length > 0 ? (
-          <div className="imageGrid">
-            {images.map((image, index) => (
-              <img src={image} key={index} alt={`Property image ${index + 1}`} />
-            ))}
-          </div>
-        ) : (
-          <p style={{ color: "#fece51", marginBottom: "20px" }}>No images uploaded yet</p>
-        )}
-        <UploadWidget
-          uwConfig={{
-            multiple: true,
-            cloudName: "dhruvik4561",
-            uploadPreset: "estate",
-            folder: "posts",
-          }}
-          setState={setImages}
-        />
+        <p className="imageInstructions">
+          Upload images for each room category. The Hall image will be used as the cover photo.
+        </p>
+        
+        <div className="categoryUploads">
+          {IMAGE_CATEGORIES.map((category) => (
+            <CategoryUploadWidget
+              key={category.key}
+              uwConfig={{
+                cloudName: "dhruvik4561",
+                uploadPreset: "estate",
+              }}
+              category={category.key}
+              label={category.label}
+              description={category.description}
+              isCover={category.isCover}
+              currentImage={categoryImages[category.key]}
+              onImageUpload={handleImageUpload}
+            />
+          ))}
+        </div>
+
+        <div className="uploadSummary">
+          <span className="summaryLabel">Images uploaded:</span>
+          <span className="summaryCount">
+            {Object.values(categoryImages).filter(Boolean).length} / {IMAGE_CATEGORIES.length}
+          </span>
+        </div>
       </div>
     </div>
   );
