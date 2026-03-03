@@ -164,21 +164,57 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    align-items: center;
-    justify-content: center;
     padding: 30px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
 
     @include md {
       margin-top: 20px;
+      max-height: none;
     }
 
     h2 {
       color: #fece51;
       font-size: 22px;
-      margin-bottom: 20px;
       text-align: center;
+      margin-bottom: 5px;
+    }
+
+    .imageInstructions {
+      color: #888;
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .categoryUploads {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .uploadSummary {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      padding: 15px;
+      background-color: #2a2a2a;
+      border-radius: 10px;
+      margin-top: 10px;
+
+      .summaryLabel {
+        color: #888;
+        font-size: 14px;
+      }
+
+      .summaryCount {
+        color: #fece51;
+        font-weight: 700;
+        font-size: 16px;
+      }
     }
 
     .imageGrid {

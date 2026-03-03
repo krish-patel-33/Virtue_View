@@ -1,23 +1,32 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./card.scss";
 
 function Card({ item, onDelete }) {
+  const navigate = useNavigate();
+
   const handleDelete = (e) => {
-    e.preventDefault(); // Prevent navigation to single page
+    e.preventDefault();
+    e.stopPropagation();
     if (window.confirm("Are you sure you want to delete this property?")) {
       onDelete(item.id);
     }
   };
 
+  const handleCardClick = () => {
+    navigate(`/${item.id}`);
+  };
+
+  const handleIconClick = (e) => {
+    e.stopPropagation();
+  };
+
   return (
-    <div className="card">
-      <Link to={`/${item.id}`} className="imageContainer">
+    <div className="card" onClick={handleCardClick}>
+      <div className="imageContainer">
         <img src={item.images[0]} alt="" />
-      </Link>
+      </div>
       <div className="textContainer">
-        <h2 className="title">
-          <Link to={`/${item.id}`}>{item.title}</Link>
-        </h2>
+        <h2 className="title">{item.title}</h2>
         <p className="address">
           <img src="/pin.png" alt="" />
           <span>{item.address}</span>
@@ -34,12 +43,9 @@ function Card({ item, onDelete }) {
               <span>{item.bathroom}</span>
             </div>
           </div>
-          <div className="icons">
+          <div className="icons" onClick={handleIconClick}>
             <div className="icon">
               <img src="/save.png" alt="" />
-            </div>
-            <div className="icon">
-              <img src="/chat.png" alt="" />
             </div>
             {onDelete && (
               <div className="icon" onClick={handleDelete} title="Delete Property">
