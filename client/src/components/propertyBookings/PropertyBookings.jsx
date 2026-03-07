@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import apiRequest from "../../lib/apiRequest";
-import "./propertyBookings.scss";
 
 function PropertyBookings() {
   const [bookings, setBookings] = useState([]);
@@ -37,53 +36,47 @@ function PropertyBookings() {
     }
   };
 
-  if (loading) return <p>Loading property bookings...</p>;
-  if (error) return <p className="error">{error}</p>;
+  if (loading) return <p className="text-gray-500 p-4">Loading property bookings...</p>;
+  if (error) return <p className="text-red-500 p-4">{error}</p>;
 
   return (
-    <div className="property-bookings">
+    <div className="mt-5">
       {bookings.length === 0 ? (
-        <p className="no-bookings">No booking requests for your properties yet.</p>
+        <p className="text-center text-gray-500 text-base p-5">No booking requests for your properties yet.</p>
       ) : (
-        <div className="booking-list">
+        <div className="flex flex-col gap-4">
           {bookings.map((booking) => (
-            <div key={booking.id} className="booking-item">
-              <div className="booking-info">
-                <h3>{booking.post.title}</h3>
-                <p className="address">{booking.post.address}</p>
-                <p className="date">
-                  Visit Date: {new Date(booking.date).toLocaleString()}
-                </p>
-                <p className="requester">
-                  Requested by: {booking.user.username}
-                </p>
-                <p className={`status ${booking.status}`}>
+            <div key={booking.id} className="bg-gray-50 rounded-lg p-4 flex justify-between items-start">
+              <div>
+                <h3 className="mb-1 text-lg text-[#333] font-semibold">{booking.post.title}</h3>
+                <p className="text-gray-500 mb-2.5">{booking.post.address}</p>
+                <p className="text-[#333] font-medium mb-1">Visit Date: {new Date(booking.date).toLocaleString()}</p>
+                <p className="text-gray-500 mb-1">Requested by: {booking.user.username}</p>
+                <span className={`inline-block px-2 py-1 rounded text-sm font-medium ${
+                  booking.status === 'pending'  ? 'bg-yellow-50 text-yellow-800' :
+                  booking.status === 'approved' ? 'bg-green-50 text-green-800' :
+                  'bg-red-50 text-red-800'
+                }`}>
                   Status: {booking.status}
-                </p>
+                </span>
                 {booking.status === 'approved' && booking.user.phoneNumber && (
-                  <p className="phoneNumber">
-                    Phone: {booking.user.phoneNumber}
-                  </p>
+                  <p className="text-gray-500 mt-1">Phone: {booking.user.phoneNumber}</p>
                 )}
               </div>
-              <div className="booking-actions">
+              <div className="flex flex-col gap-2.5">
                 <Link to={`/post/${booking.postId}`}>
-                  <button>View Property</button>
+                  <button className="px-4 py-2 bg-[#fece51] text-white border-none rounded cursor-pointer font-medium hover:opacity-90 transition-opacity">View Property</button>
                 </Link>
                 {booking.status === 'pending' && (
-                  <div className="status-buttons">
+                  <div className="flex gap-2.5">
                     <button
-                      className="approve"
+                      className="px-4 py-2 bg-green-600 text-white border-none rounded cursor-pointer font-medium hover:opacity-90 transition-opacity"
                       onClick={() => handleStatusUpdate(booking.id, 'approved')}
-                    >
-                      Approve
-                    </button>
+                    >Approve</button>
                     <button
-                      className="reject"
+                      className="px-4 py-2 bg-red-500 text-white border-none rounded cursor-pointer font-medium hover:opacity-90 transition-opacity"
                       onClick={() => handleStatusUpdate(booking.id, 'rejected')}
-                    >
-                      Reject
-                    </button>
+                    >Reject</button>
                   </div>
                 )}
               </div>

@@ -57,3 +57,67 @@ VirtueView bridges the gap between real estate developers and property buyers by
 ## 🎯 Vision
 
 VirtueView aims to revolutionize the home-buying journey by combining cutting-edge 3D visualization with a seamless digital booking experience. It ensures customers **see what they buy**, even before it's built.
+
+
+
+Virtue_View — A full-stack real estate platform featuring 3D property visualization, real-time booking, integrated chat, and interactive maps. Built with React, Node.js, MongoDB, Socket.IO, and Three.js to enhance buyer confidence through immersive virtual property tours.
+
+
+Welthos — Built a full-stack personal finance app with Next.js 15, MongoDB, and Prisma featuring multi-account management, AI-powered receipt scanning (Google Gemini), interactive financial visualizations, budget tracking, and recurring transaction support. Implemented JWT authentication, API rate limiting with Arcjet, and email notifications.f
+
+
+
+i want a latex code for my resume
+
+name : Harshil Hudaka
+
+location : Junagadh, Gujarat, India
+
+Email : harshilhudaka@gmail.com
+
+mobile : 8320085891
+
+about myself : i am doing my MCA ( charusat university ). i had completed my bachlors BSc IT (charusat university). i had learned MERN  stack  web development.
+
+
+
+Technical Skill: include all Languages,framework,liberaries,models,database and dev tools according to the MERN stack.
+
+
+
+Education: Bachlors ( BSc IT ) and Master (MCA) from the same department CMPICA of cahrusat University.
+
+high school - N.P Bhalodiya and percentage - 76.45
+
+
+
+projects: 
+
+
+
+
+
+i want a latex code for my resume
+name : Harshil Hudaka
+location : Junagadh, Gujarat, India
+Email : harshilhudaka@gmail.com
+mobile : 8320085891
+about myself : i am doing my MCA ( charusat university ). i had completed my bachlors BSc IT (charusat university). i had learned MERN  stack  web development.
+
+Technical Skill: include all Languages,framework,liberaries,models,database and dev tools according to the MERN stack.
+
+Education: Bachlors ( BSc IT ) and Master (MCA) from the same department CMPICA of charusat University.
+high school - N.P Bhalodiya and percentage - 76.45
+
+projects: 
+1) Virtue_View — A full-stack real estate platform featuring 3D property visualization, real-time booking and interactive maps. Built with React, Node.js, MongoDB and Three.js to enhance buyer confidence through immersive virtual property tours.
+
+2) Welthos — Built a full-stack personal finance app with Next.js 15, MongoDB, and Prisma featuring multi-account management, AI-powered receipt scanning (Google Gemini), interactive financial visualizations, budget tracking, and recurring transaction support. Implemented JWT authentication, API rate limiting with Arcjet, and email notifications.
+
+certifiaction:
+1)Developing Back-End Apps with Node.js and Express (coursera)
+2) Introduction to MongoDb (coursera)
+3) Data Analytics (deloitte)
+4) Getting satrted with Git and Github (coursera)
+ 
+and make the resume full one page  there should not be space left from bottom

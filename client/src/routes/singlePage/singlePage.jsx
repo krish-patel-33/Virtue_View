@@ -1,4 +1,3 @@
-import "./singlePage.scss";
 import PropertyGallery from "../../components/propertyGallery/PropertyGallery";
 import Map from "../../components/map/Map";
 import ModelViewer from "../../components/modelViewer/ModelViewer";
@@ -90,166 +89,141 @@ function SinglePage() {
   };
 
   return (
-    <div className="singlePage">
-      <div className="leftContent">
-        <div className="wrapper">
+    <div className="flex min-h-[calc(100vh-100px)]">
+      {/* Left scrollable content */}
+      <div className="flex-[2] h-[calc(100vh-100px)] overflow-y-auto bg-white">
+        <div className="p-6">
           <PropertyGallery images={post.images} />
-          <div className="info">
-            <div className="top">
-              <div className="post">
-                <h1>{post.title}</h1>
-                <div className="address">
-                  <img src="/pin.png" alt="" />
+          <div className="mt-6">
+            <div className="flex justify-between items-start mb-6">
+              <div>
+                <h1 className="text-2xl font-playfair font-bold text-[#040404] mb-2">{post.title}</h1>
+                <div className="flex items-center gap-2 text-gray-500 mb-2">
+                  <img src="/pin.png" alt="" className="w-4 h-4" />
                   <span>{post.address}</span>
                 </div>
-                <div className="price">₹ {post.price}</div>
+                <div className="text-2xl font-bold text-[#fece51]">₹ {post.price}</div>
               </div>
-              <div className="user">
-                <img src={post.user.avatar} alt="" />
-                <span>{post.user.username}</span>
+              <div className="flex flex-col items-center gap-2">
+                <img src={post.user.avatar} alt="" className="w-12 h-12 rounded-full object-cover" />
+                <span className="text-sm text-gray-500">{post.user.username}</span>
               </div>
             </div>
             <div
-              className="bottom"
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(post.postDetail.desc),
-              }}
+              className="text-gray-600 leading-relaxed prose max-w-none"
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.postDetail.desc) }}
             ></div>
           </div>
         </div>
 
-        <div className="features">
-          <div className="wrapper">
-            <p className="title">General</p>
-            <div className="listVertical">
-              <div className="feature">
-                <img src="/utility.png" alt="" />
-                <div className="featureText">
-                  <span>Utilities</span>
-                  {post.postDetail.utilities === "owner" ? (
-                    <p>Owner is responsible</p>
-                  ) : (
-                    <p>Tenant is responsible</p>
-                  )}
+        {/* Features */}
+        <div className="px-6 pb-6">
+          <p className="font-semibold text-[#040404] mb-4 text-lg">General</p>
+          <div className="flex flex-col gap-4 mb-6">
+            {[
+              { icon: "/utility.png", label: "Utilities", value: post.postDetail.utilities === "owner" ? "Owner is responsible" : "Tenant is responsible" },
+              { icon: "/pet.png", label: "Pet Policy", value: post.postDetail.pet === "allowed" ? "Pets Allowed" : "Pets not Allowed" },
+              { icon: "/fee.png", label: "Income Policy", value: post.postDetail.income },
+            ].map(f => (
+              <div key={f.label} className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
+                <img src={f.icon} alt="" className="w-8 h-8 object-contain" />
+                <div>
+                  <span className="text-sm font-medium text-[#040404] block">{f.label}</span>
+                  <p className="text-sm text-gray-500">{f.value}</p>
                 </div>
               </div>
-              <div className="feature">
-                <img src="/pet.png" alt="" />
-                <div className="featureText">
-                  <span>Pet Policy</span>
-                  {post.postDetail.pet === "allowed" ? (
-                    <p>Pets Allowed</p>
-                  ) : (
-                    <p>Pets not Allowed</p>
-                  )}
-                </div>
-              </div>
-              <div className="feature">
-                <img src="/fee.png" alt="" />
-                <div className="featureText">
-                  <span>Income Policy</span>
-                  <p>{post.postDetail.income}</p>
-                </div>
-              </div>
-            </div>
-            <p className="title">Sizes</p>
-            <div className="sizes">
-              <div className="size">
-                <img src="/size.png" alt="" />
-                <span>{post.postDetail.size} sqft</span>
-              </div>
-              <div className="size">
-                <img src="/bed.png" alt="" />
-                <span>{post.bedroom} beds</span>
-              </div>
-              <div className="size">
-                <img src="/bath.png" alt="" />
-                <span>{post.bathroom} bathroom</span>
-              </div>
-            </div>
-            <p className="title">Nearby Places</p>
-            <div className="listHorizontal">
-              <div className="feature">
-                <img src="/school.png" alt="" />
-                <div className="featureText">
-                  <span>School</span>
-                  <p>
-                    {post.postDetail.school > 999
-                      ? post.postDetail.school / 1000 + "km"
-                      : post.postDetail.school + "m"}{" "}
-                    away
-                  </p>
-                </div>
-              </div>
-              <div className="feature">
-                <img src="/pet.png" alt="" />
-                <div className="featureText">
-                  <span>Bus Stop</span>
-                  <p>{post.postDetail.bus}m away</p>
-                </div>
-              </div>
-              <div className="feature">
-                <img src="/fee.png" alt="" />
-                <div className="featureText">
-                  <span>Restaurant</span>
-                  <p>{post.postDetail.restaurant}m away</p>
-                </div>
-              </div>
-            </div>
+            ))}
+          </div>
 
-            <div className="buttons">
+          <p className="font-semibold text-[#040404] mb-4 text-lg">Sizes</p>
+          <div className="flex gap-4 mb-6">
+            {[
+              { icon: "/size.png", value: `${post.postDetail.size} sqft` },
+              { icon: "/bed.png", value: `${post.bedroom} beds` },
+              { icon: "/bath.png", value: `${post.bathroom} bathroom` },
+            ].map(s => (
+              <div key={s.icon} className="flex items-center gap-2 px-4 py-3 bg-gray-50 rounded-lg">
+                <img src={s.icon} alt="" className="w-6 h-6 object-contain" />
+                <span className="text-sm text-gray-600">{s.value}</span>
+              </div>
+            ))}
+          </div>
+
+          <p className="font-semibold text-[#040404] mb-4 text-lg">Nearby Places</p>
+          <div className="flex gap-4 mb-6 flex-wrap">
+            {[
+              { icon: "/school.png", label: "School", value: `${post.postDetail.school > 999 ? post.postDetail.school / 1000 + "km" : post.postDetail.school + "m"} away` },
+              { icon: "/pet.png", label: "Bus Stop", value: `${post.postDetail.bus}m away` },
+              { icon: "/fee.png", label: "Restaurant", value: `${post.postDetail.restaurant}m away` },
+            ].map(n => (
+              <div key={n.label} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg flex-1 min-w-[140px]">
+                <img src={n.icon} alt="" className="w-8 h-8 object-contain" />
+                <div>
+                  <span className="text-sm font-medium text-[#040404] block">{n.label}</span>
+                  <p className="text-sm text-gray-500">{n.value}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex gap-4 flex-wrap">
+            <button
+              onClick={handleSave}
+              className={`flex items-center gap-2 px-5 py-3 rounded-lg font-medium border transition-colors ${
+                saved ? "bg-[#fece51] text-white border-[#fece51] cursor-default" : "bg-white text-[#040404] border-gray-200 hover:border-[#fece51] cursor-pointer"
+              }`}
+            >
+              <img src="/save.png" alt="" className="w-5 h-5" />
+              {saved ? "Place Saved" : "Save the Place"}
+            </button>
+            {currentUser?.userType !== "seller" && (
               <button
-                onClick={handleSave}
-                className={saved ? "saved" : ""}
-                style={{
-                  backgroundColor: saved ? "#fece51" : "white",
-                  cursor: saved ? "default" : "pointer",
-                }}
+                onClick={() => setShowBookingForm(true)}
+                className="flex items-center gap-2 px-5 py-3 rounded-lg font-medium bg-[#fece51] text-white border-none cursor-pointer hover:bg-[#f0b400] transition-colors"
               >
-                <img src="/save.png" alt="" />
-                {saved ? "Place Saved" : "Save the Place"}
+                <img src="https://cdn-icons-png.flaticon.com/512/747/747310.png" alt="Calendar" className="w-5 h-5" />
+                Book a Visit
               </button>
-              {currentUser?.userType !== "seller" && (
-                <button onClick={() => setShowBookingForm(true)}>
-                  <img src="https://cdn-icons-png.flaticon.com/512/747/747310.png" alt="Calendar" />
-                  Book a Visit
-                </button>
-              )}
-            </div>
-
-            {showBookingForm && (
-              <div className="booking-form">
-                <h3>Book a Visit</h3>
-                <form onSubmit={handleBooking}>
-                  <input
-                    type="datetime-local"
-                    value={bookingDate}
-                    onChange={(e) => setBookingDate(e.target.value)}
-                    required
-                  />
-                  <button type="submit">Book Now</button>
-                  <button type="button" onClick={() => setShowBookingForm(false)}>
-                    Cancel
-                  </button>
-                  {bookingSuccess && <div className="success">{bookingSuccess}</div>}
-                </form>
-              </div>
             )}
           </div>
+
+          {bookingSuccess && <div className="mt-4 p-3 bg-green-50 text-green-700 rounded-lg text-sm">{bookingSuccess}</div>}
+
+          {showBookingForm && (
+            <div className="mt-6 p-6 bg-gray-50 rounded-xl border border-gray-200">
+              <h3 className="font-semibold text-[#040404] mb-4">Book a Visit</h3>
+              <form onSubmit={handleBooking} className="flex flex-col gap-4">
+                <input
+                  type="datetime-local"
+                  value={bookingDate}
+                  onChange={(e) => setBookingDate(e.target.value)}
+                  required
+                  className="px-4 py-3 border border-gray-200 rounded-lg text-sm outline-none focus:border-[#fece51] transition-colors"
+                />
+                <div className="flex gap-3">
+                  <button type="submit" className="flex-1 py-3 bg-[#fece51] text-white font-semibold rounded-lg border-none cursor-pointer hover:bg-[#f0b400] transition-colors">Book Now</button>
+                  <button type="button" onClick={() => setShowBookingForm(false)} className="flex-1 py-3 bg-white text-gray-600 font-semibold rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors">Cancel</button>
+                </div>
+                {bookingError && <div className="text-red-500 text-sm">{bookingError}</div>}
+              </form>
+            </div>
+          )}
         </div>
       </div>
 
-      <div className="rightContent">
-        <div className="modelViewerContainer">
+      {/* Right sticky panel */}
+      <div className="flex-[1.5] sticky top-0 h-[calc(100vh-100px)] bg-[#e8eaed] flex flex-col">
+        <div className="p-4 h-[45%]">
           <ModelViewer />
         </div>
-        <div className="mapContainer">
+        <div className="p-4 flex-1">
           <Map items={[post]} />
         </div>
       </div>
+
       {saveSuccess && (
-        <div className="saveSuccess">
-          <p>Post saved successfully!</p>
+        <div className="fixed bottom-6 right-6 bg-green-600 text-white px-5 py-3 rounded-lg shadow-lg z-50 text-sm">
+          Post saved successfully!
         </div>
       )}
     </div>

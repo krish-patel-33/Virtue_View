@@ -1,4 +1,3 @@
-import "./layout.scss";
 import Navbar from "../../components/navbar/Navbar";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useContext } from "react";
@@ -6,11 +5,11 @@ import { AuthContext } from "../../context/AuthContext";
 
 function Layout() {
   return (
-    <div className="layout">
-      <div className="navbar">
+    <div className="flex flex-col min-h-screen">
+      <div className="h-[100px] shrink-0">
         <Navbar />
       </div>
-      <div className="content">
+      <div className="flex-1 overflow-y-auto">
         <Outlet />
       </div>
     </div>
@@ -21,7 +20,7 @@ function RequireAuth() {
   const { currentUser, loading } = useContext(AuthContext);
   const location = useLocation();
 
-  if (loading) return <div className="loading">Loading...</div>;
+  if (loading) return <div className="flex items-center justify-center h-screen text-lg text-gray-500">Loading...</div>;
 
   if (!currentUser) {
     return <Navigate to="/login" state={{ from: location }} replace />;
@@ -33,11 +32,11 @@ function RequireAuth() {
   }
 
   return (
-    <div className="layout">
-      <div className="navbar">
+    <div className="flex flex-col min-h-screen">
+      <div className="h-[100px] shrink-0">
         <Navbar />
       </div>
-      <div className="content">
+      <div className="flex-1 overflow-y-auto">
         <Outlet />
       </div>
     </div>

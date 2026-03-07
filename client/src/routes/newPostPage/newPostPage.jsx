@@ -1,5 +1,4 @@
 import { useState, useCallback } from "react";
-import "./newPostPage.scss";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import apiRequest from "../../lib/apiRequest";
@@ -111,131 +110,72 @@ function NewPostPage() {
     }
   };
 
+  const inputCls = "w-full px-3 py-2.5 border border-white/10 rounded-lg bg-white/5 text-white text-sm outline-none focus:border-[#fece51] transition-colors placeholder:text-white/40";
+  const selectCls = `${inputCls} [color-scheme:dark]`;
+  const labelCls = "block text-sm text-white/70 mb-1";
+
   return (
-    <div className="newPostPage">
-      <div className="formContainer">
-        <h1>Add New Property</h1>
-        <div className="wrapper">
-          <form onSubmit={handleSubmit}>
-            <div className="item">
-              <label htmlFor="title">Property Title</label>
-              <input id="title" name="title" type="text" placeholder="Enter property title" required />
+    <div className="flex min-h-[calc(100vh-100px)]">
+      {/* Form */}
+      <div className="flex-[3] bg-white p-10 overflow-y-auto">
+        <h1 className="text-2xl font-playfair font-bold text-[#040404] mb-8">Add New Property</h1>
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {[
+            {id:'title',label:'Property Title',type:'text',placeholder:'Enter property title',required:true,colSpan:'md:col-span-2'},
+            {id:'price',label:'Price (₹)',type:'number',required:true},
+            {id:'address',label:'Address',type:'text',placeholder:'Enter property address',required:true},
+            {id:'city',label:'City',type:'text',placeholder:'Enter city',required:true},
+            {id:'bedroom',label:'Bedrooms',type:'number',min:1,placeholder:'Number of bedrooms',required:true},
+            {id:'bathroom',label:'Bathrooms',type:'number',min:1,placeholder:'Number of bathrooms',required:true},
+            {id:'size',label:'Total Size (sqft)',type:'number',min:0,placeholder:'Property size',required:true},
+            {id:'income',label:'Income Policy',type:'text',placeholder:'Income requirements',required:true},
+            {id:'school',label:'Distance to School (m)',type:'number',min:0,placeholder:'Distance to nearest school',required:true},
+            {id:'bus',label:'Distance to Bus (m)',type:'number',min:0,placeholder:'Distance to nearest bus stop',required:true},
+            {id:'restaurant',label:'Distance to Restaurant (m)',type:'number',min:0,placeholder:'Distance to nearest restaurant',required:true},
+            {id:'latitude',label:'Latitude',type:'text',placeholder:'Property latitude',required:true},
+            {id:'longitude',label:'Longitude',type:'text',placeholder:'Property longitude',required:true},
+          ].map(f => (
+            <div key={f.id} className={f.colSpan || ''}>
+              <label htmlFor={f.id} className="block text-sm text-gray-600 mb-1">{f.label}</label>
+              <input id={f.id} name={f.id} type={f.type} placeholder={f.placeholder} required={f.required} min={f.min}
+                className="w-full px-3 py-2.5 border border-gray-200 rounded-lg bg-gray-50 text-sm outline-none focus:border-[#fece51] transition-colors" />
             </div>
-            <div className="item">
-              <label htmlFor="price">Price (₹)</label>
-              <input
-                type="number"
-                id="price"
-                name="price"
-                required
-              />
-            </div>
-            <div className="item">
-              <label htmlFor="address">Address</label>
-              <input id="address" name="address" type="text" placeholder="Enter property address" required />
-            </div>
-            <div className="item">
-              <label htmlFor="city">City</label>
-              <input id="city" name="city" type="text" placeholder="Enter city" required />
-            </div>
-            <div className="item">
-              <label htmlFor="bedroom">Bedrooms</label>
-              <input min={1} id="bedroom" name="bedroom" type="number" placeholder="Number of bedrooms" required />
-            </div>
-            <div className="item">
-              <label htmlFor="bathroom">Bathrooms</label>
-              <input min={1} id="bathroom" name="bathroom" type="number" placeholder="Number of bathrooms" required />
-            </div>
-            <div className="item">
-              <label htmlFor="type">Listing Type</label>
-              <select name="type" id="type" required>
-                {/* <option value="rent">Rent</option> */}
-                <option value="buy">Buy</option>
+          ))}
+          {[{id:'type',label:'Listing Type',opts:[{v:'buy',l:'Buy'}]},{id:'property',label:'Property Type',opts:[{v:'apartment',l:'Apartment'},{v:'house',l:'House'},{v:'condo',l:'Condo'},{v:'land',l:'Land'}]},{id:'utilities',label:'Utilities Policy',opts:[{v:'owner',l:'Owner is responsible'},{v:'tenant',l:'Tenant is responsible'},{v:'shared',l:'Shared'}]},{id:'pet',label:'Pet Policy',opts:[{v:'allowed',l:'Allowed'},{v:'not-allowed',l:'Not Allowed'}]}].map(s => (
+            <div key={s.id}>
+              <label htmlFor={s.id} className="block text-sm text-gray-600 mb-1">{s.label}</label>
+              <select id={s.id} name={s.id} required className="w-full px-3 py-2.5 border border-gray-200 rounded-lg bg-gray-50 text-sm outline-none focus:border-[#fece51] transition-colors">
+                {s.opts.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
               </select>
             </div>
-            <div className="item">
-              <label htmlFor="property">Property Type</label>
-              <select name="property" id="property" required>
-                <option value="apartment">Apartment</option>
-                <option value="house">House</option>
-                <option value="condo">Condo</option>
-                <option value="land">Land</option>
-              </select>
-            </div>
-            <div className="item">
-              <label htmlFor="size">Total Size (sqft)</label>
-              <input min={0} id="size" name="size" type="number" placeholder="Property size" required />
-            </div>
-            <div className="item">
-              <label htmlFor="utilities">Utilities Policy</label>
-              <select name="utilities" id="utilities" required>
-                <option value="owner">Owner is responsible</option>
-                <option value="tenant">Tenant is responsible</option>
-                <option value="shared">Shared</option>
-              </select>
-            </div>
-            <div className="item">
-              <label htmlFor="pet">Pet Policy</label>
-              <select name="pet" id="pet" required>
-                <option value="allowed">Allowed</option>
-                <option value="not-allowed">Not Allowed</option>
-              </select>
-            </div>
-            <div className="item">
-              <label htmlFor="income">Income Policy</label>
-              <input
-                id="income"
-                name="income"
-                type="text"
-                placeholder="Income requirements"
-                required
-              />
-            </div>
-            <div className="item">
-              <label htmlFor="school">Distance to School (m)</label>
-              <input min={0} id="school" name="school" type="number" placeholder="Distance to nearest school" required />
-            </div>
-            <div className="item">
-              <label htmlFor="bus">Distance to Bus (m)</label>
-              <input min={0} id="bus" name="bus" type="number" placeholder="Distance to nearest bus stop" required />
-            </div>
-            <div className="item">
-              <label htmlFor="restaurant">Distance to Restaurant (m)</label>
-              <input min={0} id="restaurant" name="restaurant" type="number" placeholder="Distance to nearest restaurant" required />
-            </div>
-            <div className="item">
-              <label htmlFor="latitude">Latitude</label>
-              <input id="latitude" name="latitude" type="text" placeholder="Property latitude" required />
-            </div>
-            <div className="item">
-              <label htmlFor="longitude">Longitude</label>
-              <input id="longitude" name="longitude" type="text" placeholder="Property longitude" required />
-            </div>
-            <div className="item">
-              <label htmlFor="desc">Description</label>
-              <ReactQuill theme="snow" onChange={setValue} value={value} />
-            </div>
-            <button className="sendButton" type="submit" disabled={isSubmitting}>
+          ))}
+          <div className="md:col-span-2">
+            <label className="block text-sm text-gray-600 mb-1">Description</label>
+            <ReactQuill theme="snow" onChange={setValue} value={value} />
+          </div>
+          <div className="md:col-span-2">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full py-3 bg-gradient-to-r from-[#fece51] to-[#f0b400] text-white font-semibold rounded-lg border-none cursor-pointer hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed transition-opacity"
+            >
               {isSubmitting ? "Creating..." : "Create Property Listing"}
             </button>
-            {error && <span className="error">{error}</span>}
-          </form>
-        </div>
+            {error && <span className="block text-sm text-red-500 text-center mt-3">{error}</span>}
+          </div>
+        </form>
       </div>
-      <div className="sideContainer">
-        <h2>Property Images</h2>
-        <p className="imageInstructions">
+      {/* Side images */}
+      <div className="flex-[2] bg-[#1a1a1a] p-8 overflow-y-auto">
+        <h2 className="text-xl font-playfair font-bold text-white mb-2">Property Images</h2>
+        <p className="text-white/60 text-sm mb-6">
           Upload images for each room category. The Hall image will be used as the cover photo.
         </p>
-        
-        <div className="categoryUploads">
+        <div className="flex flex-col gap-5">
           {IMAGE_CATEGORIES.map((category) => (
             <CategoryUploadWidget
               key={category.key}
-              uwConfig={{
-                cloudName: "dhruvik4561",
-                uploadPreset: "estate",
-              }}
+              uwConfig={{ cloudName: "dhruvik4561", uploadPreset: "estate" }}
               category={category.key}
               label={category.label}
               description={category.description}
@@ -245,10 +185,9 @@ function NewPostPage() {
             />
           ))}
         </div>
-
-        <div className="uploadSummary">
-          <span className="summaryLabel">Images uploaded:</span>
-          <span className="summaryCount">
+        <div className="mt-6 flex items-center justify-between bg-white/5 rounded-lg px-4 py-3">
+          <span className="text-white/70 text-sm">Images uploaded:</span>
+          <span className="text-[#fece51] font-semibold">
             {Object.values(categoryImages).filter(Boolean).length} / {IMAGE_CATEGORIES.length}
           </span>
         </div>

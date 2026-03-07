@@ -1,185 +1,145 @@
 import { useContext } from "react";
 import SearchBar from "../../components/searchBar/SearchBar";
-import "./homePage.scss";
 import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 
 function HomePage() {
-  const { currentUser } = useContext(AuthContext)
+  const { currentUser } = useContext(AuthContext);
+
+  const features = [
+    { img: "/search.png", title: "Advanced Search", desc: "Find properties that match your exact criteria with our powerful search filters" },
+    { img: "https://cdn-icons-png.flaticon.com/512/684/684908.png", title: "Interactive Maps", desc: "Explore properties in their real-world location with our interactive map view" },
+    { img: "/chat.png", title: "Direct Communication", desc: "Connect directly with property owners and agents through our messaging system" },
+    { img: "/save.png", title: "Save Favorites", desc: "Bookmark your favorite properties to easily access them later" },
+  ];
+
+  const values = [
+    { num: "01", title: "Transparent Process", desc: "We believe in complete transparency throughout the property transaction process" },
+    { num: "02", title: "Verified Listings", desc: "All properties are verified to ensure they meet our quality standards" },
+    { num: "03", title: "Expert Support", desc: "Our team of real estate experts is always ready to assist you" },
+    { num: "04", title: "Secure Transactions", desc: "Your security is our priority with protected payment and data systems" },
+  ];
 
   return (
-    <div className="homePage">
+    <div>
       {/* Hero Section */}
-      <div className="heroSection">
-        <div className="heroContent">
-          <div className="heroText">
-            <div className="badge">
-              <span className="icon">⚡</span>
-              <span>Premium Real Estate</span>
-            </div>
-            <h1 className="title">
-              <span className="highlight">Luxury Living</span>
-              <br />
-              Redefined
-            </h1>
-            <p className="subtitle">
-              Discover extraordinary properties that match your extraordinary lifestyle
-            </p>
-            <div className="searchWrapper">
-              <div className="searchContainer">
-                <SearchBar />
-              </div>
-            </div>
+      <div
+        className="relative min-h-[60vh] flex items-center justify-center bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/bg.png')" }}
+      >
+        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="relative z-10 max-w-4xl mx-auto px-8 text-white text-center">
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-2 rounded-full text-sm mb-6">
+            <span>⚡</span>
+            <span>Premium Real Estate</span>
+          </div>
+          <h1 className="text-5xl font-playfair font-bold mb-4">
+            <span className="text-[#fece51]">Luxury Living</span>
+            <br />
+            Redefined
+          </h1>
+          <p className="text-lg text-white/80 mb-8">
+            Discover extraordinary properties that match your extraordinary lifestyle
+          </p>
+          <div className="max-w-2xl mx-auto">
+            <SearchBar />
           </div>
         </div>
-        <div className="heroOverlay"></div>
-        <div className="heroPattern"></div>
       </div>
 
       {/* Our Features Section */}
-      <div className="featuresSection">
-        <div className="wrapper">
-          <div className="sectionHeader">
-            <h2>Our Features</h2>
-            <p>Discover what makes us the best choice for your real estate needs</p>
+      <div className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-playfair font-bold text-[#040404] mb-3">Our Features</h2>
+            <p className="text-gray-500">Discover what makes us the best choice for your real estate needs</p>
           </div>
-          <div className="featuresGrid">
-            <div className="featureCard">
-              <div className="icon">
-                <img src="/search.png" alt="Search" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map(f => (
+              <div key={f.title} className="text-center p-8 rounded-xl bg-gray-50 hover:shadow-lg transition-all hover:-translate-y-1">
+                <div className="w-16 h-16 mx-auto mb-4">
+                  <img src={f.img} alt={f.title} className="w-full h-full object-contain" />
+                </div>
+                <h3 className="font-semibold text-[#040404] mb-2">{f.title}</h3>
+                <p className="text-gray-500 text-sm">{f.desc}</p>
               </div>
-              <h3>Advanced Search</h3>
-              <p>Find properties that match your exact criteria with our powerful search filters</p>
-            </div>
-            <div className="featureCard">
-              <div className="icon">
-                <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" alt="Map" />
-              </div>
-              <h3>Interactive Maps</h3>
-              <p>Explore properties in their real-world location with our interactive map view</p>
-            </div>
-            <div className="featureCard">
-              <div className="icon">
-                <img src="/chat.png" alt="Chat" />
-              </div>
-              <h3>Direct Communication</h3>
-              <p>Connect directly with property owners and agents through our messaging system</p>
-            </div>
-            <div className="featureCard">
-              <div className="icon">
-                <img src="/save.png" alt="Save" />
-              </div>
-              <h3>Save Favorites</h3>
-              <p>Bookmark your favorite properties to easily access them later</p>
-            </div>
+            ))}
           </div>
         </div>
       </div>
 
       {/* Our Value Section */}
-      <div className="valueSection">
-        <div className="wrapper">
-          <div className="sectionHeader">
-            <h2>Our Value</h2>
-            <p>Why thousands of people trust us for their real estate needs</p>
+      <div className="py-20 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-playfair font-bold text-[#040404] mb-3">Our Value</h2>
+            <p className="text-gray-500">Why thousands of people trust us for their real estate needs</p>
           </div>
-          <div className="valueContent">
-            <div className="valueImage">
-              <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Our Value - Modern Real Estate" />
+          <div className="flex gap-12 items-center flex-col md:flex-row">
+            <div className="flex-1 rounded-xl overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+                alt="Our Value - Modern Real Estate"
+                className="w-full h-[400px] object-cover"
+              />
             </div>
-            <div className="valuePoints">
-              <div className="valuePoint">
-                <div className="pointNumber">01</div>
-                <div className="pointContent">
-                  <h3>Transparent Process</h3>
-                  <p>We believe in complete transparency throughout the property transaction process</p>
+            <div className="flex-1 flex flex-col gap-6">
+              {values.map(v => (
+                <div key={v.num} className="flex gap-4">
+                  <div className="text-3xl font-bold text-[#fece51] font-playfair w-12 shrink-0">{v.num}</div>
+                  <div>
+                    <h3 className="font-semibold text-[#040404] mb-1">{v.title}</h3>
+                    <p className="text-gray-500 text-sm">{v.desc}</p>
+                  </div>
                 </div>
-              </div>
-              <div className="valuePoint">
-                <div className="pointNumber">02</div>
-                <div className="pointContent">
-                  <h3>Verified Listings</h3>
-                  <p>All properties are verified to ensure they meet our quality standards</p>
-                </div>
-              </div>
-              <div className="valuePoint">
-                <div className="pointNumber">03</div>
-                <div className="pointContent">
-                  <h3>Expert Support</h3>
-                  <p>Our team of real estate experts is always ready to assist you</p>
-                </div>
-              </div>
-              <div className="valuePoint">
-                <div className="pointNumber">04</div>
-                <div className="pointContent">
-                  <h3>Secure Transactions</h3>
-                  <p>Your security is our priority with protected payment and data systems</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
 
       {/* Footer Section */}
-      <footer className="footer">
-        <div className="wrapper">
-          <div className="footerContent">
-            <div className="footerColumn">
-              <div className="footerLogo">
-                <img src="/logo.png" alt="LamaEstate" />
-                <h3>Virtuview properties</h3>
+      <footer className="bg-[#1a1a1a] text-white py-16">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <img src="/logo.png" alt="Logo" className="h-8" />
+                <h3 className="font-playfair font-bold text-lg">Virtuview properties</h3>
               </div>
-              <p>Your trusted partner in finding the perfect property. We connect buyers, sellers, and renters in one place.</p>
-              <div className="socialLinks">
-                <a href="#"><i className="fab fa-facebook-f"></i></a>
-                <a href="#"><i className="fab fa-twitter"></i></a>
-                <a href="#"><i className="fab fa-instagram"></i></a>
-                <a href="#"><i className="fab fa-linkedin-in"></i></a>
+              <p className="text-gray-400 text-sm mb-4">Your trusted partner in finding the perfect property. We connect buyers, sellers, and renters in one place.</p>
+              <div className="flex gap-3">
+                {['fa-facebook-f','fa-twitter','fa-instagram','fa-linkedin-in'].map(icon => (
+                  <a key={icon} href="#" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#fece51] transition-colors">
+                    <i className={`fab ${icon} text-sm`}></i>
+                  </a>
+                ))}
               </div>
             </div>
-            <div className="footerColumn">
-              <h4>Quick Links</h4>
-              <ul>
-                <li><Link to="/"><i className="fas fa-home"></i> Home</Link></li>
-                <li><Link to="/list"><i className="fas fa-building"></i> Properties</Link></li>
-                <li><Link to="/about"><i className="fas fa-info-circle"></i> About Us</Link></li>
-                <li><Link to="/contact"><i className="fas fa-envelope"></i> Contact</Link></li>
-                <li><Link to="/blog"><i className="fas fa-blog"></i> Blog</Link></li>
+            <div>
+              <h4 className="font-semibold mb-4 text-[#fece51]">Quick Links</h4>
+              <ul className="flex flex-col gap-2 text-gray-400 text-sm">
+                <li><Link to="/" className="hover:text-[#fece51] transition-colors no-underline text-inherit"><i className="fas fa-home mr-2"></i>Home</Link></li>
+                <li><Link to="/list" className="hover:text-[#fece51] transition-colors no-underline text-inherit"><i className="fas fa-building mr-2"></i>Properties</Link></li>
+                <li><Link to="/about" className="hover:text-[#fece51] transition-colors no-underline text-inherit"><i className="fas fa-info-circle mr-2"></i>About Us</Link></li>
+                <li><Link to="/contact" className="hover:text-[#fece51] transition-colors no-underline text-inherit"><i className="fas fa-envelope mr-2"></i>Contact</Link></li>
               </ul>
             </div>
-            <div className="footerColumn">
-              <h4>Contact Us</h4>
-              <ul className="contactInfo">
-                <li>
-                  <i className="fas fa-map-marker-alt"></i>
-                  <span>virtuview properties, City, Country</span>
-                </li>
-                <li>
-                  <i className="fas fa-phone-alt"></i>
-                  <span>+1 234 567 890</span>
-                </li>
-                <li>
-                  <i className="fas fa-envelope"></i>
-                  <span>info@virtuview.com</span>
-                </li>
+            <div>
+              <h4 className="font-semibold mb-4 text-[#fece51]">Contact Us</h4>
+              <ul className="flex flex-col gap-3 text-gray-400 text-sm">
+                <li className="flex items-start gap-2"><i className="fas fa-map-marker-alt mt-1"></i><span>virtuview properties, City, Country</span></li>
+                <li className="flex items-center gap-2"><i className="fas fa-phone-alt"></i><span>+1 234 567 890</span></li>
+                <li className="flex items-center gap-2"><i className="fas fa-envelope"></i><span>info@virtuview.com</span></li>
               </ul>
             </div>
-            {/* <div className="footerColumn">
-              <h4>Newsletter</h4>
-              <p>Subscribe to our newsletter for the latest property listings and updates</p>
-              <div className="newsletterForm">
-                <input type="email" placeholder="Your email address" />
-                <button><i className="fas fa-paper-plane"></i> Subscribe</button>
-              </div>
-            </div> */}
           </div>
-          <div className="footerBottom">
+          <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-400 text-sm">
             <p>&copy; {new Date().getFullYear()} VirtuView Properties. All rights reserved.</p>
-            <div className="footerLinks">
-              <a href="#"><i className="fas fa-shield-alt"></i> Privacy Policy</a>
-              <a href="#"><i className="fas fa-file-contract"></i> Terms of Service</a>
-              <a href="#"><i className="fas fa-cookie"></i> Cookie Policy</a>
+            <div className="flex gap-6">
+              <a href="#" className="hover:text-[#fece51] transition-colors"><i className="fas fa-shield-alt mr-1"></i>Privacy Policy</a>
+              <a href="#" className="hover:text-[#fece51] transition-colors"><i className="fas fa-file-contract mr-1"></i>Terms of Service</a>
+              <a href="#" className="hover:text-[#fece51] transition-colors"><i className="fas fa-cookie mr-1"></i>Cookie Policy</a>
             </div>
           </div>
         </div>
