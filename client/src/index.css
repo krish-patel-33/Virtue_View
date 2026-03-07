@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { padding: 0; margin: 0; box-sizing: border-box; }
+  body { font-family: "Lato", sans-serif; overflow: hidden; }
+  a { text-decoration: none; color: inherit; }
+  img { max-width: 100%; height: auto; display: block; }
+  button, input, textarea, select { font-family: inherit; font-size: inherit; }
+  button { cursor: pointer; border: none; outline: none; transition: all 0.3s ease; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Leaflet map popup resets */
+.leaflet-popup-content-wrapper { padding: 0; }
+.leaflet-popup-content { margin: 10px; }

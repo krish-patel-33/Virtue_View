@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import './ModelViewer.scss';
 
 function ModelViewer() {
   const iframeRef = useRef(null);
@@ -50,22 +49,26 @@ function ModelViewer() {
   };
 
   return (
-    <div className="modelViewer">
-      <div className="zoomControls">
-        <button onClick={handleZoomIn} className="zoomButton zoomIn">
-          <span>+</span>
+    <div className="w-full h-[400px] bg-[#f5f5f5] rounded-lg overflow-hidden mb-5 shadow-[0_2px_4px_rgba(0,0,0,0.1)] relative">
+      <div className="absolute right-4 bottom-4 flex flex-col gap-2 z-10">
+        <button
+          onClick={handleZoomIn}
+          className="w-9 h-9 rounded-full bg-[#fece51] text-white border-none shadow-[0_2px_5px_rgba(0,0,0,0.2)] flex items-center justify-center cursor-pointer transition-all text-lg font-bold color-[#333] hover:bg-[#e6b847] hover:scale-105 active:scale-95"
+        >
+          <span className="leading-none">+</span>
         </button>
-        <button onClick={handleZoomOut} className="zoomButton zoomOut">
-          <span>-</span>
+        <button
+          onClick={handleZoomOut}
+          className="w-9 h-9 rounded-full bg-[#ff8a65] text-white border-none shadow-[0_2px_5px_rgba(0,0,0,0.2)] flex items-center justify-center cursor-pointer transition-all text-lg font-bold hover:bg-[#e67a55] hover:scale-105 active:scale-95"
+        >
+          <span className="leading-none">−</span>
         </button>
       </div>
-      <iframe 
+      <iframe
         ref={iframeRef}
-        src="/model-viewer.html" 
+        src="/model-viewer.html"
         title="3D Model Viewer"
-        width="100%" 
-        height="100%" 
-        frameBorder="0"
+        className="w-full h-full border-0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
       />

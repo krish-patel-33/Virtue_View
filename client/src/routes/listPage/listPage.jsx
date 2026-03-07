@@ -1,4 +1,3 @@
-import "./listPage.scss";
 import Filter from "../../components/filter/Filter";
 import Card from "../../components/card/Card";
 import Map from "../../components/map/Map";
@@ -9,14 +8,14 @@ function ListPage() {
   const data = useLoaderData();
 
   return (
-    <div className="listPage">
-      <div className="listContainer">
-        <div className="wrapper">
+    <div className="flex h-[calc(100vh-100px)]">
+      <div className="flex-[3] overflow-y-auto p-8">
+        <div className="flex flex-col gap-5">
           <Filter />
-          <Suspense fallback={<p>Loading...</p>}>
+          <Suspense fallback={<p className="text-gray-500">Loading...</p>}>
             <Await
               resolve={data.postResponse}
-              errorElement={<p>Error loading posts!</p>}
+              errorElement={<p className="text-red-500">Error loading posts!</p>}
             >
               {(postResponse) =>
                 postResponse.data.map((post) => (
@@ -27,11 +26,11 @@ function ListPage() {
           </Suspense>
         </div>
       </div>
-      <div className="mapContainer">
-        <Suspense fallback={<p>Loading...</p>}>
+      <div className="flex-[2] sticky top-0 h-full">
+        <Suspense fallback={<p className="text-gray-500">Loading...</p>}>
           <Await
             resolve={data.postResponse}
-            errorElement={<p>Error loading posts!</p>}
+            errorElement={<p className="text-red-500">Error loading posts!</p>}
           >
             {(postResponse) => <Map items={postResponse.data} />}
           </Await>
