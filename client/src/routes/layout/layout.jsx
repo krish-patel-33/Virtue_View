@@ -5,7 +5,7 @@ import { AuthContext } from "../../context/AuthContext";
 
 function Layout() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col h-screen">
       <div className="h-[100px] shrink-0">
         <Navbar />
       </div>
@@ -32,7 +32,7 @@ function RequireAuth() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col h-screen">
       <div className="h-[100px] shrink-0">
         <Navbar />
       </div>

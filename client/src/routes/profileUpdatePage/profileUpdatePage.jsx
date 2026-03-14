@@ -47,7 +47,7 @@ function ProfileUpdatePage() {
   const labelCls = "w-32 text-sm font-medium text-gray-600 shrink-0";
 
   return (
-    <div className="flex min-h-[calc(100vh-100px)]">
+    <div className="flex h-[calc(100vh-100px)]">
       {/* Form side */}
       <div className="flex-[3] p-10 bg-white overflow-y-auto">
         <form onSubmit={handleSubmit} className="max-w-lg">

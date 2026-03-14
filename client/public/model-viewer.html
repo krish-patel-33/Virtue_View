@@ -93,10 +93,10 @@
   </style>
 </head>
 <body>
-  <model-viewer 
+  <model-viewer
     id="model-viewer"
-    src="floorplan.glb" 
-    camera-controls 
+    src="floorplan.glb"
+    camera-controls
     auto-rotate 
     ar 
     ar-modes="webxr scene-viewer quick-look" 
@@ -121,8 +121,15 @@
     </div>
   </model-viewer>
   <script>
+    // Load model from query param if provided, else fallback to static floorplan.glb
+    const modelViewer = document.getElementById('model-viewer');
+    const params = new URLSearchParams(window.location.search);
+    const modelParam = params.get('model');
+    if (modelParam) {
+      modelViewer.setAttribute('src', decodeURIComponent(modelParam));
+    }
+
     // Show AR prompt when AR is available
-    const modelViewer = document.querySelector('model-viewer');
     modelViewer.addEventListener('ar-status', (event) => {
       if (event.detail.status === 'session-started') {
         document.getElementById('ar-prompt').style.display = 'block';

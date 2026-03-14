@@ -24,25 +24,61 @@ function HomePage() {
     <div>
       {/* Hero Section */}
       <div
-        className="relative min-h-[60vh] flex items-center justify-center bg-cover bg-center bg-no-repeat"
+        className="relative min-h-[88vh] flex items-center justify-center bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/bg.png')" }}
       >
-        <div className="absolute inset-0 bg-black/60"></div>
-        <div className="relative z-10 max-w-4xl mx-auto px-8 text-white text-center">
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-2 rounded-full text-sm mb-6">
-            <span>⚡</span>
-            <span>Premium Real Estate</span>
+        {/* Gradient overlay - richer depth */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/55 to-black/80"></div>
+
+        {/* Subtle gold radial glow behind title */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#fece51]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div className="relative z-10 w-full max-w-4xl mx-auto px-6 text-white text-center flex flex-col items-center gap-6 py-20">
+
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-[#fece51]/15 backdrop-blur-sm border border-[#fece51]/30 px-5 py-2 rounded-full text-sm font-poppins font-medium text-[#fece51] tracking-wide">
+            <span className="w-2 h-2 rounded-full bg-[#fece51] animate-pulse"></span>
+            Premium Real Estate Platform
           </div>
-          <h1 className="text-5xl font-playfair font-bold mb-4">
-            <span className="text-[#fece51]">Luxury Living</span>
-            <br />
-            Redefined
-          </h1>
-          <p className="text-lg text-white/80 mb-8">
-            Discover extraordinary properties that match your extraordinary lifestyle
+
+          {/* Headline */}
+          <div>
+            <h1 className="text-5xl md:text-6xl font-playfair font-bold leading-tight">
+              Find Your{" "}
+              <span className="text-[#fece51] relative">
+                Dream Home
+                <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 300 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M2 9C50 4 100 2 150 4C200 6 250 5 298 3" stroke="#fece51" strokeWidth="3" strokeLinecap="round" opacity="0.6"/>
+                </svg>
+              </span>
+            </h1>
+            <h1 className="text-5xl md:text-6xl font-playfair font-bold leading-tight mt-2">
+              in the Perfect Location
+            </h1>
+          </div>
+
+          {/* Subtext */}
+          <p className="text-white/70 text-lg font-poppins max-w-xl leading-relaxed">
+            Search thousands of properties across India — buy or rent with confidence using our smart search.
           </p>
-          <div className="max-w-2xl mx-auto">
+
+          {/* Search Bar */}
+          <div className="w-full mt-2">
             <SearchBar />
+          </div>
+
+          {/* Stats bar */}
+          <div className="flex flex-wrap justify-center gap-8 mt-4">
+            {[
+              { value: "12,000+", label: "Properties Listed" },
+              { value: "8,500+", label: "Happy Clients" },
+              { value: "120+", label: "Cities Covered" },
+            ].map((s) => (
+              <div key={s.label} className="text-center">
+                <div className="text-2xl font-playfair font-bold text-[#fece51]">{s.value}</div>
+                <div className="text-white/55 text-xs font-poppins mt-0.5">{s.label}</div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

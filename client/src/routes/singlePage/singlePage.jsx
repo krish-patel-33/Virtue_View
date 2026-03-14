@@ -214,7 +214,7 @@ function SinglePage() {
       {/* Right sticky panel */}
       <div className="flex-[1.5] sticky top-0 h-[calc(100vh-100px)] bg-[#e8eaed] flex flex-col">
         <div className="p-4 h-[45%]">
-          <ModelViewer />
+          <ModelViewer modelUrl={post.modelUrl} />
         </div>
         <div className="p-4 flex-1">
           <Map items={[post]} />
