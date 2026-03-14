@@ -42,17 +42,7 @@ VirtueView bridges the gap between real estate developers and property buyers by
 - 📋 Booking and Availability Panel  
 - 🔧 Admin Dashboard for Property Management  
 
----
 
-## 👥 Team VirtueView
-
-| Name                  | Role                                           |
-|-----------------------|------------------------------------------------|
-| **Krish Patel**       | Full-Stack Developer, Project Lead             |
-| **Janak Gadhiya**     | Backend Developer (APIs, Prisma, JWT)          |
-| **Dhruvik Kakadiya**  | UI/UX Designer, Frontend Developer             |
-
----
 
 ## 🎯 Vision
 
