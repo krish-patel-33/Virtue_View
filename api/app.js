@@ -2,6 +2,8 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import path from "path";
+import { fileURLToPath } from "url";
 import authRoute from "./routes/auth.route.js";
 import postRoute from "./routes/post.route.js";
 import testRoute from "./routes/test.route.js";
@@ -11,6 +13,9 @@ import messageRoute from "./routes/message.route.js";
 import bookingRoute from "./routes/booking.route.js";
 import propertyBookingsRoute from "./routes/propertyBookings.route.js";
 import contactRoute from "./routes/contact.route.js";
+import convertRoute from "./routes/convert.route.js";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 
@@ -27,6 +32,9 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
+// Serve generated 3D model files
+app.use("/models", express.static(path.join(__dirname, "public/models")));
+
 // Routes
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
@@ -37,6 +45,7 @@ app.use("/api/messages", messageRoute);
 app.use("/api/bookings", bookingRoute);
 app.use("/api/property-bookings", propertyBookingsRoute);
 app.use("/api/contact", contactRoute);
+app.use("/api/convert", convertRoute);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
