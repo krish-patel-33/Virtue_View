@@ -9,7 +9,7 @@ function HomePage() {
   const features = [
     { img: "/search.png", title: "Advanced Search", desc: "Find properties that match your exact criteria with our powerful search filters" },
     { img: "https://cdn-icons-png.flaticon.com/512/684/684908.png", title: "Interactive Maps", desc: "Explore properties in their real-world location with our interactive map view" },
-    { img: "/chat.png", title: "Direct Communication", desc: "Connect directly with property owners and agents through our messaging system" },
+    { img: "/3dview.jpg", title: "3D Model Generation", desc: "Experience properties in immersive 3D with our advanced model generation technology" },
     { img: "/save.png", title: "Save Favorites", desc: "Bookmark your favorite properties to easily access them later" },
   ];
 
@@ -24,7 +24,7 @@ function HomePage() {
     <div>
       {/* Hero Section */}
       <div
-        className="relative min-h-[88vh] flex items-center justify-center bg-cover bg-center bg-no-repeat"
+        className="relative h-[calc(100vh-100px)] flex items-center justify-center bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/bg.png')" }}
       >
         {/* Gradient overlay - richer depth */}
@@ -33,7 +33,7 @@ function HomePage() {
         {/* Subtle gold radial glow behind title */}
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#fece51]/10 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div className="relative z-10 w-full max-w-4xl mx-auto px-6 text-white text-center flex flex-col items-center gap-6 py-20">
+        <div className="relative z-10 w-full max-w-4xl mx-auto px-6 text-white text-center flex flex-col items-center gap-5">
 
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-[#fece51]/15 backdrop-blur-sm border border-[#fece51]/30 px-5 py-2 rounded-full text-sm font-poppins font-medium text-[#fece51] tracking-wide">
@@ -43,7 +43,7 @@ function HomePage() {
 
           {/* Headline */}
           <div>
-            <h1 className="text-5xl md:text-6xl font-playfair font-bold leading-tight">
+            <h1 className="text-4xl md:text-5xl font-playfair font-bold leading-tight">
               Find Your{" "}
               <span className="text-[#fece51] relative">
                 Dream Home
@@ -52,33 +52,19 @@ function HomePage() {
                 </svg>
               </span>
             </h1>
-            <h1 className="text-5xl md:text-6xl font-playfair font-bold leading-tight mt-2">
+            <h1 className="text-4xl md:text-5xl font-playfair font-bold leading-tight mt-2">
               in the Perfect Location
             </h1>
           </div>
 
           {/* Subtext */}
-          <p className="text-white/70 text-lg font-poppins max-w-xl leading-relaxed">
+          <p className="text-white/70 text-base font-poppins max-w-xl leading-relaxed">
             Search thousands of properties across India — buy or rent with confidence using our smart search.
           </p>
 
           {/* Search Bar */}
-          <div className="w-full mt-2">
+          <div className="w-full">
             <SearchBar />
-          </div>
-
-          {/* Stats bar */}
-          <div className="flex flex-wrap justify-center gap-8 mt-4">
-            {[
-              { value: "12,000+", label: "Properties Listed" },
-              { value: "8,500+", label: "Happy Clients" },
-              { value: "120+", label: "Cities Covered" },
-            ].map((s) => (
-              <div key={s.label} className="text-center">
-                <div className="text-2xl font-playfair font-bold text-[#fece51]">{s.value}</div>
-                <div className="text-white/55 text-xs font-poppins mt-0.5">{s.label}</div>
-              </div>
-            ))}
           </div>
         </div>
       </div>

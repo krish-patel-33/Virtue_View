@@ -1,5 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 
+// Format price in Indian Rupee format (e.g., ₹1,00,000)
+const formatIndianPrice = (price) => {
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  }).format(price);
+};
+
 function Card({ item, onDelete }) {
   const navigate = useNavigate();
 
@@ -37,7 +47,7 @@ function Card({ item, onDelete }) {
           <img src="/pin.png" alt="" className="w-4 h-4 opacity-70" />
           <span>{item.address}</span>
         </p>
-        <p className="text-[1.4rem] font-bold text-[#B8860B] m-0">₹ {item.price}</p>
+        <p className="text-[1.4rem] font-bold text-[#B8860B] m-0">{formatIndianPrice(item.price)}</p>
         <div className="mt-auto flex justify-between items-center pt-5 border-t border-gray-100">
           <div className="flex gap-5">
             <div className="flex items-center gap-2 text-gray-500">

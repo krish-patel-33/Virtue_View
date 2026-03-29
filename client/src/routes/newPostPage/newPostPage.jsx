@@ -161,7 +161,7 @@ function NewPostPage() {
                 className="w-full px-3 py-2.5 border border-gray-200 rounded-lg bg-gray-50 text-sm outline-none focus:border-[#fece51] transition-colors" />
             </div>
           ))}
-          {[{id:'type',label:'Listing Type',opts:[{v:'buy',l:'Buy'}]},{id:'property',label:'Property Type',opts:[{v:'apartment',l:'Apartment'},{v:'house',l:'House'},{v:'condo',l:'Condo'},{v:'land',l:'Land'}]},{id:'utilities',label:'Utilities Policy',opts:[{v:'owner',l:'Owner is responsible'},{v:'tenant',l:'Tenant is responsible'},{v:'shared',l:'Shared'}]},{id:'pet',label:'Pet Policy',opts:[{v:'allowed',l:'Allowed'},{v:'not-allowed',l:'Not Allowed'}]}].map(s => (
+          {[{id:'type',label:'Listing Type',opts:[{v:'buy',l:'Buy'},{v:'rent',l:'Rent'}]},{id:'property',label:'Property Type',opts:[{v:'apartment',l:'Apartment'},{v:'house',l:'House'},{v:'condo',l:'Condo'},{v:'land',l:'Land'}]},{id:'utilities',label:'Utilities Policy',opts:[{v:'owner',l:'Owner is responsible'},{v:'tenant',l:'Tenant is responsible'},{v:'shared',l:'Shared'}]},{id:'pet',label:'Pet Policy',opts:[{v:'allowed',l:'Allowed'},{v:'not-allowed',l:'Not Allowed'}]}].map(s => (
             <div key={s.id}>
               <label htmlFor={s.id} className="block text-sm text-gray-600 mb-1">{s.label}</label>
               <select id={s.id} name={s.id} required className="w-full px-3 py-2.5 border border-gray-200 rounded-lg bg-gray-50 text-sm outline-none focus:border-[#fece51] transition-colors">

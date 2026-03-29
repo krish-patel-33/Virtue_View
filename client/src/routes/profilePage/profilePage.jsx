@@ -1,4 +1,3 @@
-import Chat from "../../components/chat/Chat";
 import List from "../../components/list/List";
 import Bookings from "../../components/bookings/Bookings";
 import PropertyBookings from "../../components/propertyBookings/PropertyBookings";
@@ -140,17 +139,6 @@ function ProfilePage() {
           )}
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm p-6">
-          <h2 className="text-xl font-playfair font-bold text-[#040404] mb-5">Messages</h2>
-          <Suspense fallback={<div className="text-gray-500 text-sm">Loading...</div>}>
-            <Await
-              resolve={data.chatResponse}
-              errorElement={<div className="text-red-500 text-sm">Error loading chats!</div>}
-            >
-              {(chatResponse) => <Chat chats={chatResponse.data} />}
-            </Await>
-          </Suspense>
-        </div>
       </div>
     </div>
   );

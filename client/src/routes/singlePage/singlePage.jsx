@@ -102,7 +102,7 @@ function SinglePage() {
                   <img src="/pin.png" alt="" className="w-4 h-4" />
                   <span>{post.address}</span>
                 </div>
-                <div className="text-2xl font-bold text-[#fece51]">₹ {post.price}</div>
+                <div className="text-2xl font-bold text-[#fece51]">{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(post.price)}</div>
               </div>
               <div className="flex flex-col items-center gap-2">
                 <img src={post.user.avatar} alt="" className="w-12 h-12 rounded-full object-cover" />

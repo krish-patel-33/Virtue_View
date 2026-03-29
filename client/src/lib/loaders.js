@@ -21,20 +21,13 @@ export const profilePageLoader = async () => {
       return { data: { userPosts: [], savedPosts: [] } };
     });
 
-    const chatPromise = apiRequest("/chats").catch(err => {
-      console.error("Error fetching chats:", err);
-      return { data: [] };
-    });
-
     return defer({
       postResponse: postPromise,
-      chatResponse: chatPromise,
     });
   } catch (err) {
     console.error("Error in profilePageLoader:", err);
     return defer({
       postResponse: Promise.resolve({ data: { userPosts: [], savedPosts: [] } }),
-      chatResponse: Promise.resolve({ data: [] }),
     });
   }
 };
