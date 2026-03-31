@@ -1,8 +1,16 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 
 function CategoryUploadWidget({ uwConfig, category, label, description, onImageUpload, currentImage, isCover }) {
   const [loaded, setLoaded] = useState(false);
   const widgetRef = useRef(null);
+  const categoryRef = useRef(category);
+  const onImageUploadRef = useRef(onImageUpload);
+
+  // Keep refs updated
+  useEffect(() => {
+    categoryRef.current = category;
+    onImageUploadRef.current = onImageUpload;
+  }, [category, onImageUpload]);
 
   useEffect(() => {
     // Check if the script is already loaded
@@ -17,22 +25,32 @@ function CategoryUploadWidget({ uwConfig, category, label, description, onImageU
       document.body.appendChild(script);
     } else if (window.cloudinary) {
       setLoaded(true);
+    } else {
+      // Script exists but cloudinary not ready yet, wait for it
+      const checkCloudinary = setInterval(() => {
+        if (window.cloudinary) {
+          setLoaded(true);
+          clearInterval(checkCloudinary);
+        }
+      }, 100);
+      return () => clearInterval(checkCloudinary);
     }
   }, []);
 
+  // Create widget when loaded
   useEffect(() => {
-    if (loaded && window.cloudinary) {
+    if (loaded && window.cloudinary && !widgetRef.current) {
       try {
         widgetRef.current = window.cloudinary.createUploadWidget(
           {
             ...uwConfig,
-            multiple: false, // Only single image per category
+            multiple: false,
             folder: `posts/${category.toLowerCase()}`,
           },
           (error, result) => {
             if (!error && result && result.event === "success") {
-              console.log(`${category} image uploaded:`, result.info.secure_url);
-              onImageUpload(category, result.info.secure_url);
+              console.log(`${categoryRef.current} image uploaded:`, result.info.secure_url);
+              onImageUploadRef.current(categoryRef.current, result.info.secure_url);
             }
           }
         );
@@ -40,20 +58,45 @@ function CategoryUploadWidget({ uwConfig, category, label, description, onImageU
         console.error("Error creating upload widget:", error);
       }
     }
-  }, [loaded, uwConfig, category, onImageUpload]);
+  }, [loaded, uwConfig, category]);
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    if (widgetRef.current) {
-      widgetRef.current.open();
-    }
-  };
-
-  const handleRemove = (e) => {
+  const handleClick = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
-    onImageUpload(category, null);
-  };
+    
+    // If widget doesn't exist yet, try to create it
+    if (!widgetRef.current && loaded && window.cloudinary) {
+      try {
+        widgetRef.current = window.cloudinary.createUploadWidget(
+          {
+            ...uwConfig,
+            multiple: false,
+            folder: `posts/${category.toLowerCase()}`,
+          },
+          (error, result) => {
+            if (!error && result && result.event === "success") {
+              console.log(`${categoryRef.current} image uploaded:`, result.info.secure_url);
+              onImageUploadRef.current(categoryRef.current, result.info.secure_url);
+            }
+          }
+        );
+      } catch (error) {
+        console.error("Error creating upload widget:", error);
+      }
+    }
+    
+    if (widgetRef.current) {
+      widgetRef.current.open();
+    } else {
+      console.warn("Upload widget not ready yet. Please try again.");
+    }
+  }, [loaded, uwConfig, category]);
+
+  const handleRemove = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onImageUploadRef.current(categoryRef.current, null);
+  }, []);
 
   return (
     <div className={`bg-[#2a2a2a] rounded-xl p-5 transition-all border-2 ${
