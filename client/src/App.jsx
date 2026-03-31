@@ -8,6 +8,7 @@ import Login from "./routes/login/login";
 import Register from "./routes/register/register";
 import ProfileUpdatePage from "./routes/profileUpdatePage/profileUpdatePage";
 import NewPostPage from "./routes/newPostPage/newPostPage";
+import PropertyImagesPage from "./routes/newPostPage/propertyImagesPage";
 import AboutPage from "./routes/aboutPage/aboutPage";
 import ContactPage from "./routes/contactPage/contactPage";
 import PropertiesPage from "./routes/propertiesPage/propertiesPage";
@@ -85,6 +86,10 @@ function App() {
         {
           path: "/add",
           element: currentUser?.userType === "seller" ? <NewPostPage /> : <Navigate to="/" />,
+        },
+        {
+          path: "/add/images",
+          element: currentUser?.userType === "seller" ? <PropertyImagesPage /> : <Navigate to="/" />,
         },
       ],
     },
