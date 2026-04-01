@@ -14,6 +14,7 @@ import ContactPage from "./routes/contactPage/contactPage";
 import PropertiesPage from "./routes/propertiesPage/propertiesPage";
 import ForgotPassword from "./routes/forgotPassword/forgotPassword";
 import ResetPassword from "./routes/resetPassword/resetPassword";
+import ModelViewerPage from "./routes/modelViewerPage";
 import { listPageLoader, profilePageLoader, singlePageLoader } from "./lib/loaders";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
@@ -69,6 +70,10 @@ function App() {
           element: <ResetPassword />,
         },
       ],
+    },
+    {
+      path: "/3d-view/:id?",
+      element: <ModelViewerPage />,
     },
     {
       path: "/",

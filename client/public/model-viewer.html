@@ -17,7 +17,8 @@
     model-viewer {
       width: 100%;
       height: 100%;
-      background-color: #f5f5f5;
+      /* Dark gradient background for better visibility of white models */
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     }
     .progress-bar {
       display: block;
@@ -37,7 +38,7 @@
       transition: visibility 0.3s;
     }
     .update-bar {
-      background-color: #00ff00;
+      background-color: #fece51;
       width: 0%;
       height: 100%;
       border-radius: 25px;
@@ -45,20 +46,23 @@
       transition: width 0.3s;
     }
     #ar-button {
-      background-color: white;
-      border-radius: 4px;
+      background-color: #fece51;
+      color: #1a1a2e;
+      border-radius: 8px;
       border: none;
       position: absolute;
       bottom: 16px;
       right: 16px;
-      padding: 0.5em 1em;
+      padding: 0.6em 1.2em;
       font-size: 14px;
+      font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      transition: background-color 0.3s;
+      box-shadow: 0 4px 12px rgba(254, 206, 81, 0.3);
+      transition: all 0.3s;
     }
     #ar-button:hover {
-      background-color: #f0f0f0;
+      background-color: #f0b400;
+      transform: translateY(-2px);
     }
     #ar-prompt {
       position: absolute;
@@ -100,20 +104,23 @@
     auto-rotate 
     ar 
     ar-modes="webxr scene-viewer quick-look" 
-    shadow-intensity="1"
-    exposure="1"
-    camera-orbit="0deg 75deg 105%"
+    shadow-intensity="2"
+    shadow-softness="1"
+    exposure="1.2"
+    environment-image="neutral"
+    camera-orbit="45deg 55deg 105%"
     min-camera-orbit="auto auto 50%"
-    max-camera-orbit="auto auto 150%"
+    max-camera-orbit="auto auto 200%"
     interaction-prompt="auto"
     interaction-prompt-style="basic"
     interaction-prompt-threshold="0"
+    tone-mapping="commerce"
   >
     <div class="progress-bar" slot="progress-bar">
       <div class="update-bar"></div>
     </div>
     <button slot="ar-button" id="ar-button">
-      View in your space
+      👁️ View in AR
     </button>
     <div id="ar-prompt">
       <img src="https://modelviewer.dev/shared-assets/icons/hand.png" alt="AR hand icon">
