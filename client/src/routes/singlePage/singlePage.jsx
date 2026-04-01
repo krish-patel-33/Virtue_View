@@ -212,12 +212,34 @@ function SinglePage() {
       </div>
 
       {/* Right sticky panel */}
-      <div className="flex-[1.5] sticky top-0 h-[calc(100vh-100px)] bg-[#e8eaed] flex flex-col">
-        <div className="p-4 h-[45%]">
-          <ModelViewer modelUrl={post.modelUrl} />
+      <div className="flex-[1.5] sticky top-0 h-[calc(100vh-100px)] bg-[#e8eaed] flex flex-col p-4 gap-4">
+        {/* 3D Model Box */}
+        <div className="relative h-[48%] bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+          <div className="absolute top-3 left-3 z-10 bg-[#1a1a2e] text-white text-xs font-semibold px-3 py-1 rounded-full">
+            3D Model
+          </div>
+          <button
+            onClick={() => navigate(`/3d-view/${post.id}`)}
+            className="absolute top-3 right-3 flex items-center gap-2 px-3 py-1.5 bg-[#fece51] text-[#1a1a2e] text-xs font-semibold rounded-full hover:bg-[#f0b400] transition-colors shadow-md z-10"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3.5 h-3.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+            </svg>
+            Full View
+          </button>
+          <div className="w-full h-full">
+            <ModelViewer modelUrl={post.modelUrl} />
+          </div>
         </div>
-        <div className="p-4 flex-1">
-          <Map items={[post]} />
+        
+        {/* Map Box */}
+        <div className="relative flex-1 bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+          <div className="absolute top-3 left-3 z-10 bg-[#1a1a2e] text-white text-xs font-semibold px-3 py-1 rounded-full">
+            Location
+          </div>
+          <div className="w-full h-full">
+            <Map items={[post]} />
+          </div>
         </div>
       </div>
 
