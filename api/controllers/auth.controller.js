@@ -73,6 +73,7 @@ export const register = async (req, res) => {
         username: true,
         email: true,
         userType: true,
+        isAdmin: true,
         avatar: true,
         phoneNumber: true,
         createdAt: true

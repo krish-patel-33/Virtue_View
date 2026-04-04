@@ -12,8 +12,7 @@ export const AuthContextProvider = ({ children }) => {
     if (user) {
       try {
         const parsedUser = JSON.parse(user);
-        // Validate user type
-        if (parsedUser && (parsedUser.userType === 'buyer' || parsedUser.userType === 'seller')) {
+        if (parsedUser && (parsedUser.userType === "buyer" || parsedUser.userType === "seller")) {
           setCurrentUser(parsedUser);
         } else {
           console.error("Invalid user type in localStorage");
@@ -28,7 +27,7 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   const updateUser = (data) => {
-    if (data && (data.userType === 'buyer' || data.userType === 'seller')) {
+    if (data && (data.userType === "buyer" || data.userType === "seller")) {
       setCurrentUser(data);
       localStorage.setItem("user", JSON.stringify(data));
     } else {
