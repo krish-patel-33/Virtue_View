@@ -1,7 +1,7 @@
 import HomePage from "./routes/homePage/homePage";
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import ListPage from "./routes/listPage/listPage";
-import { Layout, RequireAuth } from "./routes/layout/layout";
+import { Layout, RequireAdmin, RequireAuth } from "./routes/layout/layout";
 import SinglePage from "./routes/singlePage/singlePage";
 import ProfilePage from "./routes/profilePage/profilePage";
 import Login from "./routes/login/login";
@@ -15,6 +15,7 @@ import PropertiesPage from "./routes/propertiesPage/propertiesPage";
 import ForgotPassword from "./routes/forgotPassword/forgotPassword";
 import ResetPassword from "./routes/resetPassword/resetPassword";
 import ModelViewerPage from "./routes/modelViewerPage";
+import AdminDashboardPage from "./routes/adminDashboardPage/adminDashboardPage";
 import { listPageLoader, profilePageLoader, singlePageLoader } from "./lib/loaders";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
@@ -95,6 +96,16 @@ function App() {
         {
           path: "/add/images",
           element: currentUser?.userType === "seller" ? <PropertyImagesPage /> : <Navigate to="/" />,
+        },
+      ],
+    },
+    {
+      path: "/",
+      element: <RequireAdmin />,
+      children: [
+        {
+          path: "/admin",
+          element: <AdminDashboardPage />,
         },
       ],
     },

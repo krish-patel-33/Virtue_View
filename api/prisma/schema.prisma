@@ -9,25 +9,29 @@ datasource db {
 }
 
 model Post {
-  id         String      @id @default(auto()) @map("_id") @db.ObjectId
-  title      String
-  price      Int
-  images     String[]
-  address    String
-  city       String
-  bedroom    Int
-  bathroom   Int
-  latitude   String
-  longitude  String
-  type       Type
-  property   Property
-  modelUrl   String?
-  createdAt  DateTime    @default(now())
-  user       User        @relation(fields: [userId], references: [id])
-  userId     String      @db.ObjectId
-  postDetail PostDetail?
-  savedPosts SavedPost[]
-  bookings   Booking[]
+  id              String      @id @default(auto()) @map("_id") @db.ObjectId
+  title           String
+  price           Int
+  images          String[]
+  address         String
+  city            String
+  bedroom         Int
+  bathroom        Int
+  latitude        String
+  longitude       String
+  type            Type
+  property        Property
+  modelUrl        String?
+  status          String      @default("pending") // pending, approved, rejected
+  rejectionReason String?
+  approvedBy      String?     @db.ObjectId
+  approvedAt      DateTime?
+  createdAt       DateTime    @default(now())
+  user            User        @relation(fields: [userId], references: [id])
+  userId          String      @db.ObjectId
+  postDetail      PostDetail?
+  savedPosts      SavedPost[]
+  bookings        Booking[]
 }
 
 enum Type {
@@ -73,19 +77,24 @@ model SavedPost {
 }
 
 model User {
-  id         String      @id @default(auto()) @map("_id") @db.ObjectId
-  email      String      @unique
-  username   String      @unique
-  password   String
-  avatar     String?
-  userType   UserType    @default(buyer)
-  phoneNumber String?
-  resetToken String?
+  id             String      @id @default(auto()) @map("_id") @db.ObjectId
+  email          String      @unique
+  username       String      @unique
+  password       String
+  avatar         String?
+  userType       UserType    @default(buyer)
+  isAdmin        Boolean     @default(false)
+  accountStatus  String      @default("active") // active, suspended, banned
+  suspendReason  String?
+  suspendedAt    DateTime?
+  lastLogin      DateTime?
+  phoneNumber    String?
+  resetToken     String?
   resetTokenExpr DateTime?
-  createdAt  DateTime    @default(now())
-  posts      Post[]
-  savedPosts SavedPost[]
-  bookings   Booking[]
+  createdAt      DateTime    @default(now())
+  posts          Post[]
+  savedPosts     SavedPost[]
+  bookings       Booking[]
 }
 
 model Booking {
@@ -108,5 +117,6 @@ model ContactMsg {
   email     String
   subject   String
   message   String
+  status    String   @default("new") // new, read, resolved
   createdAt DateTime @default(now())
 }

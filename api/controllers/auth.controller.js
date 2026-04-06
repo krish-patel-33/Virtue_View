@@ -73,6 +73,7 @@ export const register = async (req, res) => {
         username: true,
         email: true,
         userType: true,
+        isAdmin: true,
         avatar: true,
         phoneNumber: true,
         createdAt: true
@@ -88,7 +89,7 @@ export const register = async (req, res) => {
     res.cookie("access_token", token, {
       httpOnly: true,
       secure: true,
-      sameSite: 'none',
+      sameSite: 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       path: '/'
     });
@@ -137,7 +138,7 @@ export const login = async (req, res) => {
     res.cookie("access_token", token, {
       httpOnly: true,
       secure: true,
-      sameSite: 'none',
+      sameSite: 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       path: '/'
     })
@@ -153,7 +154,7 @@ export const logout = (req, res) => {
   res.clearCookie("access_token", {
     httpOnly: true,
     secure: true,
-    sameSite: 'none',
+    sameSite: 'lax',
     path: '/'
   }).status(200).json({ message: "Logout Successful" });
 };
@@ -249,5 +250,28 @@ export const resetPassword = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Something went wrong!" });
+  }
+};
+
+export const verifySession = async (req, res) => {
+  try {
+    const token = req.cookies.access_token;
+    if (!token) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    const user = await prisma.user.findUnique({
+      where: { id: decoded.id },
+      select: {
+        id: true, username: true, email: true, avatar: true,
+        userType: true, isAdmin: true, accountStatus: true,
+      },
+    });
+    if (!user || user.accountStatus === "suspended") {
+      return res.status(401).json({ message: "User not found or suspended" });
+    }
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(401).json({ message: "Invalid session" });
   }
 };

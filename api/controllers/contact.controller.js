@@ -4,6 +4,11 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+function escapeHtml(text) {
+  const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+  return text.replace(/[&<>"']/g, m => map[m]);
+}
+
 export const addContactMsg = async (req, res) => {
     const { name, email, subject, message } = req.body;
 
@@ -30,14 +35,14 @@ export const addContactMsg = async (req, res) => {
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: process.env.ADMIN_EMAIL || process.env.EMAIL_USER, // Send to admin (or self if not specified)
-            subject: `New Contact Message: ${subject}`,
+            subject: `New Contact Message: ${escapeHtml(subject)}`,
             html: `
                 <h3>New Message from VirtueView Contact Form</h3>
-                <p><strong>Name:</strong> ${name}</p>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>Subject:</strong> ${subject}</p>
+                <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+                <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+                <p><strong>Subject:</strong> ${escapeHtml(subject)}</p>
                 <p><strong>Message:</strong></p>
-                <p>${message}</p>
+                <p>${escapeHtml(message)}</p>
             `,
         };
 

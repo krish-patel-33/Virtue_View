@@ -1,3 +1,8 @@
+# Documentation/Review files (internal use only)
+PRODUCTION_CODE_REVIEW.md
+QUICK_FIX_GUIDE.md
+SECURITY_FIXES_APPLIED.md
+
 # Logs
 logs
 *.log

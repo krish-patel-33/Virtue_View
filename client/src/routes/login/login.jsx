@@ -13,7 +13,7 @@ function Login() {
 
   useEffect(() => {
     if (currentUser && !loading) {
-      navigate("/");
+      navigate(currentUser.isAdmin ? "/admin" : "/");
     }
   }, [currentUser, loading, navigate]);
 
@@ -33,7 +33,7 @@ function Login() {
 
       if (res.data) {
         updateUser(res.data);
-        navigate("/");
+        navigate(res.data.isAdmin ? "/admin" : "/");
       }
     } catch (err) {
       console.error("Login error:", err);

@@ -12,6 +12,8 @@ import bookingRoute from "./routes/booking.route.js";
 import propertyBookingsRoute from "./routes/propertyBookings.route.js";
 import contactRoute from "./routes/contact.route.js";
 import convertRoute from "./routes/convert.route.js";
+import adminRoute from "./routes/admin.routes.js";
+import adminContactRoute from "./routes/contact.admin.route.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -42,6 +44,8 @@ app.use("/api/bookings", bookingRoute);
 app.use("/api/property-bookings", propertyBookingsRoute);
 app.use("/api/contact", contactRoute);
 app.use("/api/convert", convertRoute);
+app.use("/api/admin", adminRoute);
+app.use("/api/admin/contacts", adminContactRoute);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

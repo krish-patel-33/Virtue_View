@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import apiRequest from "../lib/apiRequest";
 
 export const AuthContext = createContext();
 
@@ -7,38 +8,32 @@ export const AuthContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check for user in localStorage on initial load
-    const user = localStorage.getItem("user");
-    if (user) {
+    const verifySession = async () => {
       try {
-        const parsedUser = JSON.parse(user);
-        // Validate user type
-        if (parsedUser && (parsedUser.userType === 'buyer' || parsedUser.userType === 'seller')) {
-          setCurrentUser(parsedUser);
-        } else {
-          console.error("Invalid user type in localStorage");
-          localStorage.removeItem("user");
-        }
-      } catch (error) {
-        console.error("Error parsing user data:", error);
-        localStorage.removeItem("user");
+        const res = await apiRequest.get("/auth/verify");
+        setCurrentUser(res.data);
+      } catch (err) {
+        setCurrentUser(null);
+      } finally {
+        setLoading(false);
       }
-    }
-    setLoading(false);
+    };
+    verifySession();
   }, []);
 
   const updateUser = (data) => {
-    if (data && (data.userType === 'buyer' || data.userType === 'seller')) {
-      setCurrentUser(data);
-      localStorage.setItem("user", JSON.stringify(data));
-    } else {
-      setCurrentUser(null);
-      localStorage.removeItem("user");
-    }
+    setCurrentUser(data);
+    // Don't store in localStorage anymore
   };
 
+  if (loading) {
+    return <div className="flex items-center justify-center min-h-screen">
+      <div className="text-xl">Loading...</div>
+    </div>;
+  }
+
   return (
-    <AuthContext.Provider value={{ currentUser, updateUser, loading }}>
+    <AuthContext.Provider value={{ currentUser, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

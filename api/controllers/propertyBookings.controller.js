@@ -81,6 +81,10 @@ export const updateBookingStatus = async (req, res, next) => {
       return next(createError(404, 'Booking not found'));
     }
 
+    if (!booking.post) {
+      return next(createError(404, 'Booking or property not found'));
+    }
+
     if (booking.post.userId !== userId) {
       return next(createError(403, 'You are not authorized to update this booking'));
     }
