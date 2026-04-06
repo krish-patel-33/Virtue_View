@@ -36,7 +36,7 @@ function Register() {
         password,
         userType
       });
-      updateUser(res.data.data); // accessing data from the response structure
+      updateUser(res.data); // fixed: accessing data directly from the response
       setShowNotification(true);
       setNotificationMessage("Registration successful!");
     } catch (err) {

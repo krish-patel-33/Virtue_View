@@ -3,7 +3,19 @@ import bcrypt from "bcrypt";
 
 export const getUsers = async (req, res) => {
   try {
-    const users = await prisma.user.findMany();
+    const users = await prisma.user.findMany({
+      select: {
+        id: true, 
+        username: true, 
+        email: true, 
+        avatar: true,
+        userType: true, 
+        accountStatus: true, 
+        isAdmin: true, 
+        createdAt: true,
+        // password: false - EXCLUDED for security
+      },
+    });
     res.status(200).json(users);
   } catch (err) {
     console.log(err);

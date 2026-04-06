@@ -211,7 +211,7 @@ function PropertyImagesPage() {
             <span className="text-xs bg-[#fece51] text-[#1a1a1a] px-2 py-0.5 rounded-full font-bold">COVER IMAGE</span>
           </h3>
           <CategoryUploadWidget
-            uwConfig={{ cloudName: "dhruvik4561", uploadPreset: "estate" }}
+            uwConfig={{ cloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME, uploadPreset: import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET }}
             category="hall"
             label="Hall"
             description="Main living room / hall area - This will be used as the cover photo"
@@ -228,7 +228,7 @@ function PropertyImagesPage() {
             Kitchen
           </h3>
           <CategoryUploadWidget
-            uwConfig={{ cloudName: "dhruvik4561", uploadPreset: "estate" }}
+            uwConfig={{ cloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME, uploadPreset: import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET }}
             category="kitchen"
             label="Kitchen"
             description="Kitchen / cooking area of the property"
@@ -248,7 +248,7 @@ function PropertyImagesPage() {
             {bedroomImages.map((image, index) => (
               <CategoryUploadWidget
                 key={`bedroom-${index}`}
-                uwConfig={{ cloudName: "dhruvik4561", uploadPreset: "estate" }}
+                uwConfig={{ cloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME, uploadPreset: import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET }}
                 category={`bedroom-${index}`}
                 label={`Bedroom ${index + 1}`}
                 description={`Upload image for bedroom ${index + 1}`}
@@ -270,7 +270,7 @@ function PropertyImagesPage() {
             {bathroomImages.map((image, index) => (
               <CategoryUploadWidget
                 key={`bathroom-${index}`}
-                uwConfig={{ cloudName: "dhruvik4561", uploadPreset: "estate" }}
+                uwConfig={{ cloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME, uploadPreset: import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET }}
                 category={`bathroom-${index}`}
                 label={`Bathroom ${index + 1}`}
                 description={`Upload image for bathroom ${index + 1}`}

@@ -90,7 +90,7 @@ function ProfileUpdatePage() {
           className="w-32 h-32 rounded-full object-cover border-4 border-[#fece51]"
         />
         <UploadWidget
-          uwConfig={{ cloudName: "lamadev", uploadPreset: "estate", multiple: false, maxImageFileSize: 2000000, folder: "avatars" }}
+          uwConfig={{ cloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME, uploadPreset: import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET, multiple: false, maxImageFileSize: 2000000, folder: "avatars" }}
           setState={setAvatar}
         />
       </div>
