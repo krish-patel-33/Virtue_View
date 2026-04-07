@@ -57,14 +57,22 @@ export const getChat = async (req, res) => {
       },
     });
 
+    // Get current seenBy to avoid duplicates
+    const currentChat = await prisma.chat.findUnique({
+      where: { id: req.params.id },
+      select: { seenBy: true },
+    });
+
+    // Use Set to ensure no duplicates
+    const seenBySet = new Set(currentChat?.seenBy || []);
+    seenBySet.add(tokenUserId);
+
     await prisma.chat.update({
       where: {
         id: req.params.id,
       },
       data: {
-        seenBy: {
-          push: [tokenUserId],
-        },
+        seenBy: Array.from(seenBySet),
       },
     });
     res.status(200).json(chat);

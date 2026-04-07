@@ -1,29 +1,61 @@
 import prisma from "../lib/prisma.js";
 import jwt from "jsonwebtoken";
+import { PAGINATION, HTTP_STATUS } from "../constants.js";
 
 export const getPosts = async (req, res) => {
   const query = req.query;
 
   try {
-    const posts = await prisma.post.findMany({
-      where: {
-        city: query.city ? { contains: query.city, mode: "insensitive" } : undefined,
-        type: query.type || undefined,
-        property: query.property || undefined,
-        bedroom: parseInt(query.bedroom) || undefined,
-        price: {
-          gte: parseInt(query.minPrice) || undefined,
-          lte: parseInt(query.maxPrice) || undefined,
+    // Pagination
+    const page = parseInt(query.page) || PAGINATION.DEFAULT_PAGE;
+    const limit = Math.min(parseInt(query.limit) || PAGINATION.POSTS_PER_PAGE, PAGINATION.MAX_LIMIT);
+    const skip = (page - 1) * limit;
+
+    // Build where clause
+    const where = {
+      city: query.city ? { contains: query.city, mode: "insensitive" } : undefined,
+      type: query.type || undefined,
+      property: query.property || undefined,
+      bedroom: parseInt(query.bedroom) || undefined,
+      price: {
+        gte: parseInt(query.minPrice) || undefined,
+        lte: parseInt(query.maxPrice) || undefined,
+      },
+    };
+
+    // Execute query with pagination
+    const [posts, total] = await Promise.all([
+      prisma.post.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: { createdAt: "desc" },
+        include: {
+          user: {
+            select: {
+              id: true,
+              username: true,
+              avatar: true,
+            },
+          },
         },
+      }),
+      prisma.post.count({ where }),
+    ]);
+
+    res.status(HTTP_STATUS.OK).json({
+      posts,
+      pagination: {
+        total,
+        page,
+        pages: Math.ceil(total / limit),
+        limit,
+        hasMore: page * limit < total,
       },
     });
-
-    // setTimeout(() => {
-    res.status(200).json(posts);
-    // }, 3000);
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Failed to get posts" });
+    console.error("Error fetching posts:", err);
+    res.status(HTTP_STATUS.SERVER_ERROR).json({ message: "Failed to get posts" });
   }
 };
 

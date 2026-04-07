@@ -105,8 +105,8 @@ function SinglePage() {
                 <div className="text-2xl font-bold text-[#fece51]">{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(post.price)}</div>
               </div>
               <div className="flex flex-col items-center gap-2">
-                <img src={post.user.avatar} alt="" className="w-12 h-12 rounded-full object-cover" />
-                <span className="text-sm text-gray-500">{post.user.username}</span>
+                <img src={post.user?.avatar || "/noavatar.jpg"} alt={post.user?.username || "User"} className="w-12 h-12 rounded-full object-cover" />
+                <span className="text-sm text-gray-500">{post.user?.username || "Unknown User"}</span>
               </div>
             </div>
             <div

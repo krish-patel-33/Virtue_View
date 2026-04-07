@@ -64,7 +64,7 @@ function PropertyBookings() {
                 )}
               </div>
               <div className="flex flex-col gap-2.5">
-                <Link to={`/post/${booking.postId}`}>
+                <Link to={`/${booking.postId}`}>
                   <button className="px-4 py-2 bg-[#fece51] text-white border-none rounded cursor-pointer font-medium hover:opacity-90 transition-opacity">View Property</button>
                 </Link>
                 {booking.status === 'pending' && (
