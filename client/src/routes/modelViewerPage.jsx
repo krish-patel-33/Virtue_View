@@ -1,13 +1,14 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 
 function ModelViewerPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  // Use default model or specific model based on property
-  const modelUrl = "/floorplan.glb";
+  const modelUrl =
+    new URLSearchParams(location.search).get("model") || "/enhanced_model.glb";
 
   const toggleFullscreen = () => {
     const elem = document.getElementById("model-container");

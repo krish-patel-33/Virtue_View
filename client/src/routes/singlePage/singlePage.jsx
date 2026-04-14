@@ -94,6 +94,19 @@ function SinglePage() {
       <div className="flex-[2] h-[calc(100vh-100px)] overflow-y-auto bg-white">
         <div className="p-6">
           <PropertyGallery images={post.images} />
+          <div className="mt-4">
+            <button
+              onClick={handleSave}
+              className={`inline-flex items-center gap-2 rounded-lg border-[4px] px-5 py-3 font-medium shadow-sm transition-colors ${
+                saved
+                  ? "bg-[#fece51] text-white border-[#8a6500] hover:bg-[#f0b400] cursor-pointer"
+                  : "bg-white text-[#040404] border-[#1f2937] hover:bg-[#fff7db] hover:border-[#fece51] cursor-pointer"
+              }`}
+            >
+              <img src="/save.png" alt="" className="w-5 h-5" />
+              {saved ? "Place Saved" : "Save the Place"}
+            </button>
+          </div>
           <div className="mt-6">
             <div className="flex justify-between items-start mb-6">
               <div>
@@ -167,15 +180,6 @@ function SinglePage() {
           </div>
 
           <div className="flex gap-4 flex-wrap">
-            <button
-              onClick={handleSave}
-              className={`flex items-center gap-2 px-5 py-3 rounded-lg font-medium border transition-colors ${
-                saved ? "bg-[#fece51] text-white border-[#fece51] cursor-default" : "bg-white text-[#040404] border-gray-200 hover:border-[#fece51] cursor-pointer"
-              }`}
-            >
-              <img src="/save.png" alt="" className="w-5 h-5" />
-              {saved ? "Place Saved" : "Save the Place"}
-            </button>
             {currentUser?.userType !== "seller" && (
               <button
                 onClick={() => setShowBookingForm(true)}
@@ -219,7 +223,13 @@ function SinglePage() {
             3D Model
           </div>
           <button
-            onClick={() => navigate(`/3d-view/${post.id}`)}
+            onClick={() =>
+              navigate(
+                `/3d-view/${post.id}?model=${encodeURIComponent(
+                  post.modelUrl || "/enhanced_model.glb"
+                )}`
+              )
+            }
             className="absolute top-3 right-3 flex items-center gap-2 px-3 py-1.5 bg-[#fece51] text-[#1a1a2e] text-xs font-semibold rounded-full hover:bg-[#f0b400] transition-colors shadow-md z-10"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3.5 h-3.5">

@@ -19,7 +19,7 @@ export const listPageLoader = async ({ request, params }) => {
     });
   } catch (err) {
     return defer({
-      postResponse: Promise.resolve({ data: [] }),
+      postResponse: Promise.resolve({ data: { posts: [], pagination: null } }),
     });
   }
 };

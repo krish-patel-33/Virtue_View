@@ -99,7 +99,7 @@
 <body>
   <model-viewer
     id="model-viewer"
-    src="floorplan.glb"
+    src="enhanced_model.glb"
     camera-controls
     auto-rotate 
     ar 
@@ -128,7 +128,7 @@
     </div>
   </model-viewer>
   <script>
-    // Load model from query param if provided, else fallback to static floorplan.glb
+    // Load model from query param if provided, else fallback to static enhanced_model.glb
     const modelViewer = document.getElementById('model-viewer');
     const params = new URLSearchParams(window.location.search);
     const modelParam = params.get('model');

@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { getPropertyImages } from "./lib/propertyImages.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -127,14 +128,14 @@ const main = async () => {
         }
 
         // 4. Insert Properties
-        for (const prop of properties) {
+        for (const [index, prop] of properties.entries()) {
             console.log(`Inserting: ${prop.title}`);
             const { postDetail, ...postData } = prop;
 
             await prisma.post.create({
                 data: {
                     ...postData,
-                    images: ["https://images.pexels.com/photos/1918291/pexels-photo-1918291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", "https://images.pexels.com/photos/1428348/pexels-photo-1428348.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", "https://images.pexels.com/photos/2062426/pexels-photo-2062426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", "https://images.pexels.com/photos/2467285/pexels-photo-2467285.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"], // Placeholder images as requested "I will upload image later" (but code requires array)
+                    images: getPropertyImages(index),
                     userId: user.id,
                     postDetail: {
                         create: postDetail

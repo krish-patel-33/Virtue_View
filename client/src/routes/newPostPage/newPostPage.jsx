@@ -7,6 +7,10 @@ function NewPostPage() {
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
   const [formValues, setFormValues] = useState({});
+  const inputCls =
+    "w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-800 placeholder-gray-400 outline-none transition-colors focus:border-[#fece51] focus:bg-gray-50";
+  const highlightedInputCls =
+    "border-[#fece51]/50 bg-[#fece51]/5 focus:bg-[#fece51]/5";
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -147,8 +151,8 @@ function NewPostPage() {
                   required={f.required} 
                   min={f.min}
                   defaultValue={formValues[f.id] || ''}
-                  className={`w-full px-3 py-2.5 border rounded-lg bg-gray-50 text-sm outline-none focus:border-[#fece51] transition-colors ${
-                    f.highlight ? 'border-[#fece51]/50 bg-[#fece51]/5' : 'border-gray-200'
+                  className={`${inputCls} ${
+                    f.highlight ? highlightedInputCls : ""
                   }`} 
                 />
               </div>
@@ -161,7 +165,7 @@ function NewPostPage() {
                   name={s.id} 
                   required 
                   defaultValue={formValues[s.id] || s.opts[0].v}
-                  className="w-full px-3 py-2.5 border border-gray-200 rounded-lg bg-gray-50 text-sm outline-none focus:border-[#fece51] transition-colors"
+                  className={inputCls}
                 >
                   {s.opts.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
                 </select>

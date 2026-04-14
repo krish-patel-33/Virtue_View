@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 // Default 3D model for properties without a specific model
-const DEFAULT_MODEL_URL = "/floorplan.glb";
+const DEFAULT_MODEL_URL = "/enhanced_model.glb";
 
 function ModelViewer({ modelUrl }) {
   const iframeRef = useRef(null);

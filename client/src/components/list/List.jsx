@@ -10,7 +10,7 @@ function List({ posts, onDelete }) {
   }
 
   return (
-    <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-8 p-5 w-full min-h-screen">
+    <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-8 p-5 w-full">
       {posts.map(item => (
         <Card key={item.id} item={item} onDelete={onDelete} />
       ))}
