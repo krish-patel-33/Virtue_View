@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import prisma from "../lib/prisma.js";
+import { validatePassword } from "../middleware/validation.js";
 
 export const register = async (req, res) => {
   const { username, email, password, userType } = req.body;
@@ -162,39 +163,57 @@ export const logout = (req, res) => {
 import nodemailer from "nodemailer";
 import crypto from "crypto";
 
+const FORGOT_PASSWORD_RESPONSE = {
+  message: "If an account with that email exists, a password reset link has been sent.",
+};
+
+const hashResetToken = (token) =>
+  crypto.createHash("sha256").update(token).digest("hex");
+
 export const forgotPassword = async (req, res) => {
   const { email } = req.body;
 
   try {
-    const user = await prisma.user.findUnique({ where: { email } });
+    const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
+    if (process.env.NODE_ENV === "production" && !clientUrl.startsWith("https://")) {
+      console.error("Invalid CLIENT_URL configuration for password reset");
+      return res.status(500).json({ message: "Password reset is not configured" });
+    }
 
+    const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(200).json(FORGOT_PASSWORD_RESPONSE);
     }
 
     const resetToken = crypto.randomBytes(32).toString("hex");
+    const hashedResetToken = hashResetToken(resetToken);
     const resetTokenExpr = new Date(Date.now() + 3600000); // 1 hour
 
     await prisma.user.update({
       where: { email },
       data: {
-        resetToken,
+        resetToken: hashedResetToken,
         resetTokenExpr,
       },
     });
 
+    const resetUrl = `${clientUrl}/reset-password?token=${resetToken}`;
+
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      console.log("DEV MODE: Reset Link:", resetUrl);
+      return res.status(200).json(FORGOT_PASSWORD_RESPONSE);
+    }
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.EMAIL_USER || "your-email@gmail.com", // Replace with env var
-        pass: process.env.EMAIL_PASS || "your-app-password",    // Replace with env var
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
     });
 
-    const resetUrl = `${process.env.CLIENT_URL || "http://localhost:5173"}/reset-password?token=${resetToken}`;
-
     const mailOptions = {
-      from: process.env.EMAIL_USER || "no-reply@virtueview.com",
+      from: process.env.EMAIL_USER,
       to: email,
       subject: "Password Reset Request",
       html: `<p>You requested a password reset.</p>
@@ -202,14 +221,8 @@ export const forgotPassword = async (req, res) => {
              <a href="${resetUrl}">${resetUrl}</a>`,
     };
 
-    // If no credentials, just log it for dev
-    if (!process.env.EMAIL_USER) {
-      console.log("DEV MODE: Reset Link:", resetUrl);
-      return res.status(200).json({ message: "Email sent (Check console for link)" });
-    }
-
     await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: "Email sent" });
+    res.status(200).json(FORGOT_PASSWORD_RESPONSE);
 
   } catch (err) {
     console.log(err);
@@ -221,9 +234,20 @@ export const resetPassword = async (req, res) => {
   const { token, newPassword } = req.body;
 
   try {
+    if (!token || !newPassword) {
+      return res.status(400).json({ message: "Token and new password are required" });
+    }
+
+    if (!validatePassword(newPassword)) {
+      return res.status(400).json({
+        message: "Password must be 8-128 characters with at least one letter and one number",
+      });
+    }
+
+    const hashedResetToken = hashResetToken(token);
     const user = await prisma.user.findFirst({
       where: {
-        resetToken: token,
+        resetToken: hashedResetToken,
         resetTokenExpr: {
           gt: new Date(),
         },

@@ -40,6 +40,25 @@ export const registerLimiter = rateLimit({
   },
 });
 
+// Rate limiter for forgot password requests
+export const forgotPasswordLimiter = rateLimit({
+  windowMs: RATE_LIMIT.FORGOT_PASSWORD_WINDOW_MS,
+  max: RATE_LIMIT.FORGOT_PASSWORD_MAX_ATTEMPTS,
+  message: {
+    message: ERROR_MESSAGES.RATE_LIMIT.TOO_MANY_REQUESTS,
+    detail: "Too many password reset requests. Please try again in 1 hour.",
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+  handler: (req, res) => {
+    res.status(HTTP_STATUS.TOO_MANY_REQUESTS).json({
+      message: "Too many password reset requests",
+      detail: "Please try again in 1 hour",
+      retryAfter: Math.ceil(RATE_LIMIT.FORGOT_PASSWORD_WINDOW_MS / 1000 / 60),
+    });
+  },
+});
+
 // General API rate limiter
 export const apiLimiter = rateLimit({
   windowMs: RATE_LIMIT.API_WINDOW_MS,

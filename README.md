@@ -1,49 +1,145 @@
-# 🏠 VirtueView: 3D Property Visualization and Real-Time Booking System
+# VirtueView
 
-**VirtueView** is a full-stack platform built to transform the way people buy real estate. It offers immersive **3D previews** of under-construction properties and enables customers to **book their future homes online** with complete confidence and clarity.
+A full-stack real estate platform focused on **3D property visualization** and **online booking workflows**. VirtueView helps buyers explore under-construction properties with better clarity before purchase.
 
-🚀 Designed to enhance buyer trust and reduce post-purchase dissatisfaction through visual transparency and interactive experience.
+## Overview
 
----
+VirtueView combines a modern React client, Node.js/Express API, and Prisma-backed MongoDB data layer to deliver:
+- property discovery and listing management
+- secure authentication and session handling
+- booking and user interaction workflows
+- optional real-time communication support via Socket.IO
 
-## 🔍 Overview
+## Key Features
 
-VirtueView bridges the gap between real estate developers and property buyers by providing 3D visualization of projects. Customers can walk through their dream homes virtually, review detailed property specifications, and book units in real-time.
+- 3D property preview integration (Unity/Blender assets)
+- role-based user flows (buyer/seller/admin-oriented surfaces)
+- JWT-based authentication
+- property management and booking-related modules
+- responsive frontend UI with Tailwind + SCSS
 
----
+## Tech Stack
 
-## ✅ Core Features
+| Layer | Technology |
+|---|---|
+| Frontend | React, Vite, Tailwind CSS, Sass |
+| Backend | Node.js, Express |
+| Database | MongoDB with Prisma ORM |
+| Auth | JWT, HTTP-only cookies |
+| Realtime (optional) | Socket.IO |
 
-- 🏘️ Property listing & management by developers  
-- 🧱 3D visualization of homes using Unity and Blender  
-- 👤 Buyer dashboard with real-time booking updates  
-- 🔐 Secure login system with JWT authentication  
-- 🛠️ Admin panel to manage users, properties & bookings  
-- 🎨 Clean, responsive UI built with Tailwind and SCSS  
+## Repository Structure
 
----
+```text
+VirtueView_r/
+├── client/        # React + Vite frontend
+├── api/           # Express API + Prisma
+├── socket/        # Socket.IO server (optional)
+├── docs/          # Project docs
+├── scripts/       # Utility scripts
+├── start-all.bat  # Windows start helper
+└── start_project.sh # Linux/macOS start helper
+```
 
-## 🛠️ Tech Stack
+## Getting Started
 
-- **Frontend:** React.js, Tailwind CSS, SCSS  
-- **Backend:** Node.js, Express.js  
-- **Database:** MongoDB + Prisma ORM  
-- **Authentication:** JWT  
-- **3D Visualization:** Unity Engine, Blender  
-- **Tools:** Git, GitHub, Postman  
+### Prerequisites
 
----
+- Node.js 18+
+- npm 9+
+- MongoDB instance
 
-## 📸 UI Glimpse
+### 1) Install dependencies
 
-> (Add screenshots or demo images here)
+```bash
+cd client && npm install
+cd ../api && npm install
+cd ../socket && npm install
+```
 
-- 🏡 3D Property Walkthrough  
-- 📋 Booking and Availability Panel  
-- 🔧 Admin Dashboard for Property Management  
+### 2) Configure environment
 
+Create your `.env` files (at minimum in `api/`) with required values such as:
 
+```env
+DATABASE_URL=your_mongodb_connection_string
+JWT_SECRET_KEY=your_secure_secret
+CLIENT_URL=http://localhost:5173
+EMAIL_USER=your_email
+EMAIL_PASS=your_email_app_password
+```
 
-## 🎯 Vision
+### 3) Run database sync
 
-VirtueView aims to revolutionize the home-buying journey by combining cutting-edge 3D visualization with a seamless digital booking experience. It ensures customers **see what they buy**, even before it's built.
+```bash
+cd api
+npx prisma db push
+```
+
+### 4) Start the application
+
+**Windows**
+```bat
+start-all.bat
+```
+
+**Linux/macOS**
+```bash
+./start_project.sh
+```
+
+Or run manually:
+
+```bash
+# terminal 1
+cd api && npm start
+
+# terminal 2
+cd client && npm run dev
+
+# terminal 3 (optional)
+cd socket && npm start
+```
+
+## Available Scripts
+
+### API (`api/`)
+- `npm start` - run API
+- `npm run dev` - run API with nodemon
+- `npm run db:push` - sync Prisma schema
+- `npm run db:studio` - open Prisma Studio
+
+### Client (`client/`)
+- `npm run dev` - start Vite dev server
+- `npm run build` - production build
+- `npm run preview` - preview built app
+- `npm run lint` - run ESLint
+
+### Socket (`socket/`)
+- `npm start` - run Socket.IO server
+
+## Screenshots
+
+> Save your images in `docs/screenshots/` (recommended), then replace the paths below.
+
+<!-- SCREENSHOT: Home page -->
+![Home Page](docs/screenshots/home-page.png)
+
+<!-- SCREENSHOT: Property details / 3D view -->
+![Property 3D View](docs/screenshots/property-3d-view.png)
+
+<!-- SCREENSHOT: Booking flow/dashboard -->
+![Booking Dashboard](docs/screenshots/booking-dashboard.png)
+
+<!-- SCREENSHOT: Admin panel -->
+![Admin Panel](docs/screenshots/admin-panel.png)
+
+## Security Notes
+
+- Do not commit real secrets in `.env` files.
+- Use strong `JWT_SECRET_KEY` values.
+- Use production HTTPS URLs for `CLIENT_URL`.
+
+## License
+
+This project is licensed under the ISC License unless updated otherwise in the repository.
