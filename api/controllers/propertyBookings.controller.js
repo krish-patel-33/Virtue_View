@@ -25,6 +25,9 @@ export const getPropertyBookings = async (req, res, next) => {
         postId: {
           in: postIds,
         },
+        date: {
+          gte: new Date(),
+        },
       },
       include: {
         user: {

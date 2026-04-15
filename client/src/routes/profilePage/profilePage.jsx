@@ -80,6 +80,11 @@ function ProfilePage() {
         {currentUser.userType === "seller" && (
           <>
             <div className="bg-white rounded-xl shadow-sm p-6">
+              <h2 className="text-xl font-playfair font-bold text-[#040404] mb-5">Property Booking Requests</h2>
+              <PropertyBookings />
+            </div>
+
+            <div className="bg-white rounded-xl shadow-sm p-6">
               <div className="flex justify-between items-center mb-5">
                 <h2 className="text-xl font-playfair font-bold text-[#040404]">My Properties</h2>
                 <Link
@@ -109,11 +114,6 @@ function ProfilePage() {
                   }}
                 </Await>
               </Suspense>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-xl font-playfair font-bold text-[#040404] mb-5">Property Booking Requests</h2>
-              <PropertyBookings />
             </div>
           </>
         )}
