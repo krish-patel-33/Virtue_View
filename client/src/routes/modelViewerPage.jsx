@@ -5,7 +5,7 @@ function ModelViewerPage() {
   const navigate = useNavigate();
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const modelUrl = "/project1.glb";
+  const modelUrl = "/enhanced_model.glb";
 
   const toggleFullscreen = () => {
     const elem = document.getElementById("model-container");

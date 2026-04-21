@@ -226,7 +226,7 @@ function SinglePage() {
             onClick={() =>
               navigate(
                 `/3d-view/${post.id}?model=${encodeURIComponent(
-                  "/project1.glb"
+                  "/enhanced_model.glb"
                 )}`
               )
             }

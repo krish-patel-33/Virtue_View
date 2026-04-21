@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 // Global 3D model used for all properties
-const DEFAULT_MODEL_URL = "/project1.glb";
+const DEFAULT_MODEL_URL = "/enhanced_model.glb";
 
 function ModelViewer() {
   const iframeRef = useRef(null);
