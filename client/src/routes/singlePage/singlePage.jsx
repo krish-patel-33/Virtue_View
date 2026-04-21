@@ -226,7 +226,7 @@ function SinglePage() {
             onClick={() =>
               navigate(
                 `/3d-view/${post.id}?model=${encodeURIComponent(
-                  post.modelUrl || "/enhanced_model.glb"
+                  "/project1.glb"
                 )}`
               )
             }
@@ -238,7 +238,7 @@ function SinglePage() {
             Full View
           </button>
           <div className="w-full h-full">
-            <ModelViewer modelUrl={post.modelUrl} />
+            <ModelViewer />
           </div>
         </div>
         

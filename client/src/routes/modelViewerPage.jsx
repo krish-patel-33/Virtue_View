@@ -1,14 +1,11 @@
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 function ModelViewerPage() {
-  const { id } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const modelUrl =
-    new URLSearchParams(location.search).get("model") || "/enhanced_model.glb";
+  const modelUrl = "/project1.glb";
 
   const toggleFullscreen = () => {
     const elem = document.getElementById("model-container");

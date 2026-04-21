@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 
-// Default 3D model for properties without a specific model
-const DEFAULT_MODEL_URL = "/enhanced_model.glb";
+// Global 3D model used for all properties
+const DEFAULT_MODEL_URL = "/project1.glb";
 
-function ModelViewer({ modelUrl }) {
+function ModelViewer() {
   const iframeRef = useRef(null);
   const [zoomLevel, setZoomLevel] = useState(100);
 
-  // Use provided modelUrl or fall back to default
-  const activeModelUrl = modelUrl || DEFAULT_MODEL_URL;
+  const activeModelUrl = DEFAULT_MODEL_URL;
 
   const iframeSrc = `/model-viewer.html?model=${encodeURIComponent(activeModelUrl)}`;
 
